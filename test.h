@@ -1,6 +1,6 @@
 #pragma once
 #pragma GCC optimize(2)
-// ektest (version 1.0.2)
+// ektest (version 1.1.0)
 // Simple unit testing and benchmarking utility for C
 //
 // Using eklipsed's test.h:
