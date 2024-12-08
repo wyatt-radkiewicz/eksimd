@@ -38,6 +38,16 @@ typedef __Float32x4_t simd_f32;
 			simd_i32: simd_i32(0),                                 \
 			simd_u32: simd_i32(0),                                 \
 			simd_f32: simd_f32(0))))
+#define _simd_index_type(_simd)                                                \
+	(typeof(_Generic(                                                      \
+		_simd,                                                         \
+			simd_i8: simd_u8(0),                                   \
+			simd_u8: simd_u8(0),                                   \
+			simd_i16: simd_u16(0),                                 \
+			simd_u16: simd_u16(0),                                 \
+			simd_i32: simd_u32(0),                                 \
+			simd_u32: simd_u32(0),                                 \
+			simd_f32: simd_u32(0))))
 
 // Initialization functions
 _simdapi simd_i8 simd_i8_dup_n(int8_t val) {
@@ -372,12 +382,51 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 		 _simd_lane_cast_type(_simd) _simd))
 #endif
 
-// Reverse vector elements
+// Shuffle builtin on clang and GCC
 #if __clang__
-
+# define _simd_shuffle(_simd, ...)                                             \
+	 __builtin_shufflevector(_simd, _simd, __VA_ARGS__)
 #else
+# define _simd_shuffle(_simd, ...)                                             \
+	 __builtin_shuffle(_simd, _simd_index_type(_simd){__VA_ARGS__})
 #endif
 
+// Reverse vector elements
+_simdapi simd_i8 simd_i8_rev(simd_i8 val) {
+	return _simd_shuffle(
+		val, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+}
+_simdapi simd_u8 simd_u8_rev(simd_u8 val) {
+	return _simd_shuffle(
+		val, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+}
+_simdapi simd_i16 simd_i16_rev(simd_i16 val) {
+	return _simd_shuffle(val, 7, 6, 5, 4, 3, 2, 1, 0);
+}
+_simdapi simd_u16 simd_u16_rev(simd_u16 val) {
+	return _simd_shuffle(val, 7, 6, 5, 4, 3, 2, 1, 0);
+}
+_simdapi simd_i32 simd_i32_rev(simd_i32 val) {
+	return _simd_shuffle(val, 3, 2, 1, 0);
+}
+_simdapi simd_u32 simd_u32_rev(simd_u32 val) {
+	return _simd_shuffle(val, 3, 2, 1, 0);
+}
+_simdapi simd_f32 simd_f32_rev(simd_f32 val) {
+	return _simd_shuffle(val, 3, 2, 1, 0);
+}
+#define simd_rev(_simd)                                                        \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_i8_rev,                                         \
+		 simd_u8: simd_u8_rev,                                         \
+		 simd_i16: simd_i16_rev,                                       \
+		 simd_u16: simd_u16_rev,                                       \
+		 simd_i32: simd_i32_rev,                                       \
+		 simd_u32: simd_u32_rev,                                       \
+		 simd_f32: simd_f32_rev)(_simd))
+
+// Shuffle
 // Shift vector elements right
 // Shift vector elements left
 

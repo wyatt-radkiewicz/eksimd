@@ -294,3 +294,66 @@ test(rbit_u8) {
 	pass;
 }
 
+test(rev_i8) {
+	simd_i8 rev = simd_rev(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	assert(simd_get_lane(rev, 0) == 15);
+	assert(simd_get_lane(rev, 5) == 10);
+	assert(simd_get_lane(rev, 10) == 5);
+	assert(simd_get_lane(rev, 15) == 0);
+	pass;
+}
+
+test(rev_u8) {
+	simd_u8 rev = simd_rev(simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	assert(simd_get_lane(rev, 0) == 15);
+	assert(simd_get_lane(rev, 5) == 10);
+	assert(simd_get_lane(rev, 10) == 5);
+	assert(simd_get_lane(rev, 15) == 0);
+	pass;
+}
+
+test(rev_i16) {
+	simd_i16 rev = simd_rev(simd_i16(0, 1, 2, 3, 4, 5, 6, 7));
+	assert(simd_get_lane(rev, 0) == 7);
+	assert(simd_get_lane(rev, 1) == 6);
+	assert(simd_get_lane(rev, 6) == 1);
+	assert(simd_get_lane(rev, 7) == 0);
+	pass;
+}
+
+test(rev_u16) {
+	simd_u16 rev = simd_rev(simd_u16(0, 1, 2, 3, 4, 5, 6, 7));
+	assert(simd_get_lane(rev, 0) == 7);
+	assert(simd_get_lane(rev, 1) == 6);
+	assert(simd_get_lane(rev, 6) == 1);
+	assert(simd_get_lane(rev, 7) == 0);
+	pass;
+}
+
+test(rev_i32) {
+	simd_i32 rev = simd_rev(simd_i32(0, 1, 2, 3));
+	assert(simd_get_lane(rev, 0) == 3);
+	assert(simd_get_lane(rev, 1) == 2);
+	assert(simd_get_lane(rev, 2) == 1);
+	assert(simd_get_lane(rev, 3) == 0);
+	pass;
+}
+
+test(rev_u32) {
+	simd_u32 rev = simd_rev(simd_u32(0, 1, 2, 3));
+	assert(simd_get_lane(rev, 0) == 3);
+	assert(simd_get_lane(rev, 1) == 2);
+	assert(simd_get_lane(rev, 2) == 1);
+	assert(simd_get_lane(rev, 3) == 0);
+	pass;
+}
+
+test(rev_f32) {
+	simd_f32 rev = simd_rev(simd_f32(0, 1, 2, 3));
+	assert(simd_get_lane(rev, 0) == 3);
+	assert(simd_get_lane(rev, 1) == 2);
+	assert(simd_get_lane(rev, 2) == 1);
+	assert(simd_get_lane(rev, 3) == 0);
+	pass;
+}
+
