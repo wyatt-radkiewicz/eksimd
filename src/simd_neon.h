@@ -28,6 +28,17 @@ typedef __Float32x4_t simd_f32;
 #define _simd_choose8(_0, _1, _2, _3, _4, _5, _6, _7, _name, ...) _name
 #define _simd_choose4(_0, _1, _2, _3, _name, ...) _name
 
+#define _simd_lane_cast_type(_simd)                                            \
+	(typeof(_Generic(                                                      \
+		_simd,                                                         \
+			simd_i8: simd_i8(0),                                   \
+			simd_u8: simd_i8(0),                                   \
+			simd_i16: simd_i16(0),                                 \
+			simd_u16: simd_i16(0),                                 \
+			simd_i32: simd_i32(0),                                 \
+			simd_u32: simd_i32(0),                                 \
+			simd_f32: simd_f32(0))))
+
 // Initialization functions
 _simdapi simd_i8 simd_i8_dup_n(int8_t val) {
 	return (simd_i8){val, val, val, val, val, val, val, val,
@@ -129,16 +140,6 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 
 // Getting and setting specific lanes
 #ifdef __clang__
-# define _simd_lane_cast_type(_simd)                                           \
-	 (typeof(_Generic(                                                     \
-		 _simd,                                                        \
-			 simd_i8: simd_i8(0),                                  \
-			 simd_u8: simd_i8(0),                                  \
-			 simd_i16: simd_i16(0),                                \
-			 simd_u16: simd_i16(0),                                \
-			 simd_i32: simd_i32(0),                                \
-			 simd_u32: simd_i32(0),                                \
-			 simd_f32: simd_f32(0))))
 # define simd_i8_get_lane(_simd, _lane)                                        \
 	 (int8_t)__builtin_neon_vgetq_lane_i8((simd_i8)_simd, _lane)
 # define simd_u8_get_lane(_simd, _lane)                                        \
@@ -180,7 +181,7 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 # define simd_f32_set_lane(_val, _simd, _lane)                                 \
 	 (simd_f32) __builtin_neon_vsetq_lane_f32(_val, (simd_f32)_simd, _lane)
 # define simd_set_lane(_val, _simd, _lane)                                     \
-	 ((typeof(_simd))_Generic(                                      \
+	 ((typeof(_simd))_Generic(                                             \
 		 _simd,                                                        \
 		  simd_i8: __builtin_neon_vsetq_lane_i8,                       \
 		  simd_u8: __builtin_neon_vsetq_lane_i8,                       \
@@ -219,15 +220,207 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 	 __simd_set_lane_any(_val, _simd, _lane)
 # define simd_u8_set_lane(_val, _simd, _lane)                                  \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_i16_set_lane(_val, _simd, _lane)                                  \
+# define simd_i16_set_lane(_val, _simd, _lane)                                 \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_u16_set_lane(_val, _simd, _lane)                                  \
+# define simd_u16_set_lane(_val, _simd, _lane)                                 \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_i32_set_lane(_val, _simd, _lane)                                  \
+# define simd_i32_set_lane(_val, _simd, _lane)                                 \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_u32_set_lane(_val, _simd, _lane)                                  \
+# define simd_u32_set_lane(_val, _simd, _lane)                                 \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_f32_set_lane(_val, _simd, _lane)                                  \
+# define simd_f32_set_lane(_val, _simd, _lane)                                 \
 	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_set_lane(_val, _simd, _lane) __simd_set_lane_any(_val, _simd, _lane)
+# define simd_set_lane(_val, _simd, _lane)                                     \
+	 __simd_set_lane_any(_val, _simd, _lane)
 #endif
+
+// Casts
+_simdapi simd_i8  simd_i8_cvt_i8(simd_i8 val) { return val; }
+_simdapi simd_u8  simd_i8_cvt_u8(simd_i8 val) { return (simd_u8)val; }
+_simdapi simd_i16 simd_i16_cvt_i16(simd_i16 val) { return val; }
+_simdapi simd_u16 simd_i16_cvt_u16(simd_i16 val) { return (simd_u16)val; }
+_simdapi simd_i32 simd_i32_cvt_i32(simd_i32 val) { return val; }
+_simdapi simd_u32 simd_i32_cvt_u32(simd_i32 val) { return (simd_u32)val; }
+_simdapi simd_i8  simd_u8_cvt_i8(simd_u8 val) { return (simd_i8)val; }
+_simdapi simd_u8  simd_u8_cvt_u8(simd_u8 val) { return val; }
+_simdapi simd_i16 simd_u16_cvt_i16(simd_u16 val) { return (simd_i16)val; }
+_simdapi simd_u16 simd_u16_cvt_u16(simd_u16 val) { return val; }
+_simdapi simd_i32 simd_u32_cvt_i32(simd_u32 val) { return (simd_i32)val; }
+_simdapi simd_u32 simd_u32_cvt_u32(simd_u32 val) { return val; }
+_simdapi simd_f32 simd_f32_cvt_f32(simd_f32 val) { return val; }
+
+#if __clang__
+_simdapi simd_i32 simd_f32_cvt_i32(simd_f32 val) {
+	return __builtin_neon_vcvtq_s32_v((simd_i8)val, 34);
+}
+_simdapi simd_u32 simd_f32_cvt_u32(simd_f32 val) {
+	return __builtin_neon_vcvtq_u32_v((simd_i8)val, 50);
+}
+_simdapi simd_f32 simd_i32_cvt_f32(simd_i32 val) {
+	return __builtin_neon_vcvtq_f32_v((simd_i8)val, 34);
+}
+_simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
+	return __builtin_neon_vcvtq_f32_v((simd_i8)val, 50);
+}
+#else
+_simdapi simd_i32 simd_f32_cvt_i32(simd_f32 val) {
+	return __builtin_aarch64_lbtruncv4sfv4si(val);
+}
+_simdapi simd_u32 simd_f32_cvt_u32(simd_f32 val) {
+	return __builtin_aarch64_lbtruncuv4sfv4si_us(val);
+}
+_simdapi simd_f32 simd_i32_cvt_f32(simd_i32 val) {
+	return __builtin_aarch64_floatv4siv4sf(val);
+}
+_simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
+	return __builtin_aarch64_floatunsv4siv4sf((simd_i32)val);
+}
+#endif // __clang__ else __GNUC__
+#define simd_cvt(_simd, _toty)                                                 \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: _Generic(                                            \
+			 (_toty){},                                            \
+			 simd_i8: simd_i8_cvt_i8,                              \
+			 simd_u8: simd_i8_cvt_u8,                              \
+			 simd_i16: NULL,                                       \
+			 simd_u16: NULL,                                       \
+			 simd_i32: NULL,                                       \
+			 simd_u32: NULL,                                       \
+			 simd_f32: NULL),                                      \
+		 simd_u8: _Generic(                                            \
+			 (_toty){},                                            \
+			 simd_i8: simd_u8_cvt_i8,                              \
+			 simd_u8: simd_u8_cvt_u8,                              \
+			 simd_i16: NULL,                                       \
+			 simd_u16: NULL,                                       \
+			 simd_i32: NULL,                                       \
+			 simd_u32: NULL,                                       \
+			 simd_f32: NULL),                                      \
+		 simd_i16: _Generic(                                           \
+			 (_toty){},                                            \
+			 simd_i8: NULL,                                        \
+			 simd_u8: NULL,                                        \
+			 simd_i16: simd_i16_cvt_i16,                           \
+			 simd_u16: simd_i16_cvt_u16,                           \
+			 simd_i32: NULL,                                       \
+			 simd_u32: NULL,                                       \
+			 simd_f32: NULL),                                      \
+		 simd_u16: _Generic(                                           \
+			 (_toty){},                                            \
+			 simd_i8: NULL,                                        \
+			 simd_u8: NULL,                                        \
+			 simd_i16: simd_u16_cvt_i16,                           \
+			 simd_u16: simd_u16_cvt_u16,                           \
+			 simd_i32: NULL,                                       \
+			 simd_u32: NULL,                                       \
+			 simd_f32: NULL),                                      \
+		 simd_i32: _Generic(                                           \
+			 (_toty){},                                            \
+			 simd_i8: NULL,                                        \
+			 simd_u8: NULL,                                        \
+			 simd_i16: NULL,                                       \
+			 simd_u16: NULL,                                       \
+			 simd_i32: simd_i32_cvt_i32,                           \
+			 simd_u32: simd_i32_cvt_u32,                           \
+			 simd_f32: simd_i32_cvt_f32),                          \
+		 simd_u32: _Generic(                                           \
+			 (_toty){},                                            \
+			 simd_i8: NULL,                                        \
+			 simd_u8: NULL,                                        \
+			 simd_i16: NULL,                                       \
+			 simd_u16: NULL,                                       \
+			 simd_i32: simd_u32_cvt_i32,                           \
+			 simd_u32: simd_u32_cvt_u32,                           \
+			 simd_f32: simd_u32_cvt_f32),                          \
+		 simd_f32: _Generic(                                           \
+			 (_toty){},                                            \
+			 simd_i8: NULL,                                        \
+			 simd_u8: NULL,                                        \
+			 simd_i16: NULL,                                       \
+			 simd_u16: NULL,                                       \
+			 simd_i32: simd_f32_cvt_i32,                           \
+			 simd_u32: simd_f32_cvt_u32,                           \
+			 simd_f32: simd_f32_cvt_f32))(_simd))
+
+// Reinterpret Cast
+#define simd_reinterpret(_simd, _toty) ((_toty)(_simd))
+
+// Reverse bits in each byte
+#if __clang__
+# define simd_rbit_i8(_simd)                                                   \
+	 (simd_i8) __builtin_neon_vrbitq_v((simd_i8)_simd, 32)
+# define simd_rbit_u8(_simd)                                                   \
+	 (simd_u8) __builtin_neon_vrbitq_v((simd_i8)_simd, 48)
+# define simd_rbit(_simd)                                                      \
+	 ((typeof(_simd))_Generic(                                             \
+		 _simd,                                                        \
+		  simd_i8: __builtin_neon_vrbitq_v,                            \
+		  simd_u8: __builtin_neon_vrbitq_v)(                           \
+		 _simd_lane_cast_type(_simd) _simd,                            \
+		 _Generic(_simd, simd_i8: 32, simd_u8: 48)))
+#else
+# define simd_rbit_i8(_simd)                                                   \
+	 (simd_i8) __builtin_aarch64_rbitv16qi((simd_i8)_simd)
+# define simd_rbit_u8(_simd)                                                   \
+	 (simd_u8) __builtin_aarch64_rbitv16qi((simd_i8)_simd)
+# define simd_rbit(_simd)                                                      \
+	 ((typeof(_simd))_Generic(                                             \
+		 _simd,                                                        \
+		  simd_i8: __builtin_aarch64_rbitv16qi,                        \
+		  simd_u8: __builtin_aarch64_rbitv16qi)(                       \
+		 _simd_lane_cast_type(_simd) _simd))
+#endif
+
+// Reverse vector elements
+#if __clang__
+
+#else
+#endif
+
+// Shift vector elements right
+// Shift vector elements left
+
+// Load
+// Store
+// Widen
+// Narrow
+
+// Addition
+// Subtract
+// Multiply
+// Multiply by scalar
+// Division
+// Reciprocal
+// Absolute
+// Maximum
+// Minimum
+// Round
+// Square Root
+// Pairwise Addition
+// Pairwise Addition with Narrow
+// Addition Across
+// Maxmumum Across
+// Minumum Across
+
+// Shift left
+// Shift right
+// Shift left insert
+// Shift right insert
+
+// Negate
+// NOT
+// OR
+// AND
+// XOR
+
+// Compare Equal
+// Compare Not Equal
+// Compare Greater or equal to
+// Compare Less or equal to
+// Compare Greater
+// Compare Less
+
+// Bitwise select
+// Population count
+// Count leading zeros
