@@ -2,9 +2,9 @@
 #include "test.h"
 
 test(init_i8) {
-	simd_i8 one_typed = simd_dup_n_i8(0);
-	simd_i8 all_typed =
-		simd_n_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+	simd_i8 one_typed = simd_init_n_i8(0);
+	simd_i8 all_typed = simd_init_i8(
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 	simd_i8 one = simd_i8(0);
 	simd_i8 all =
 		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
@@ -12,9 +12,9 @@ test(init_i8) {
 }
 
 test(init_u8) {
-	simd_u8 one_typed = simd_dup_n_u8(0);
-	simd_u8 all_typed =
-		simd_n_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+	simd_u8 one_typed = simd_init_n_u8(0);
+	simd_u8 all_typed = simd_init_u8(
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 	simd_u8 one = simd_u8(0);
 	simd_u8 all =
 		simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
@@ -22,40 +22,40 @@ test(init_u8) {
 }
 
 test(init_i16) {
-	simd_i16 one_typed = simd_dup_n_i16(0);
-	simd_i16 all_typed = simd_n_i16(0, 1, 2, 3, 4, 5, 6, 7);
+	simd_i16 one_typed = simd_init_n_i16(0);
+	simd_i16 all_typed = simd_init_i16(0, 1, 2, 3, 4, 5, 6, 7);
 	simd_i16 one = simd_i16(0);
 	simd_i16 all = simd_i16(0, 1, 2, 3, 4, 5, 6, 7);
 	pass;
 }
 
 test(init_u16) {
-	simd_u16 one_typed = simd_dup_n_u16(0);
-	simd_u16 all_typed = simd_n_u16(0, 1, 2, 3, 4, 5, 6, 7);
+	simd_u16 one_typed = simd_init_n_u16(0);
+	simd_u16 all_typed = simd_init_u16(0, 1, 2, 3, 4, 5, 6, 7);
 	simd_u16 one = simd_u16(0);
 	simd_u16 all = simd_u16(0, 1, 2, 3, 4, 5, 6, 7);
 	pass;
 }
 
 test(init_i32) {
-	simd_i32 one_typed = simd_dup_n_i32(0);
-	simd_i32 all_typed = simd_n_i32(0, 1, 2, 3);
+	simd_i32 one_typed = simd_init_n_i32(0);
+	simd_i32 all_typed = simd_init_i32(0, 1, 2, 3);
 	simd_i32 one = simd_i32(0);
 	simd_i32 all = simd_i32(0, 1, 2, 3);
 	pass;
 }
 
 test(init_u32) {
-	simd_u32 one_typed = simd_dup_n_u32(0);
-	simd_u32 all_typed = simd_n_u32(0, 1, 2, 3);
+	simd_u32 one_typed = simd_init_n_u32(0);
+	simd_u32 all_typed = simd_init_u32(0, 1, 2, 3);
 	simd_u32 one = simd_u32(0);
 	simd_u32 all = simd_u32(0, 1, 2, 3);
 	pass;
 }
 
 test(init_f32) {
-	simd_f32 one_typed = simd_dup_n_f32(0);
-	simd_f32 all_typed = simd_n_f32(0, 1, 2, 3);
+	simd_f32 one_typed = simd_init_n_f32(0);
+	simd_f32 all_typed = simd_init_f32(0, 1, 2, 3);
 	simd_f32 one = simd_f32(0);
 	simd_f32 all = simd_f32(0, 1, 2, 3);
 	pass;
@@ -468,5 +468,35 @@ test(narrow_hi_i32) {
 	int16_t	 out[8];
 	simd_st(out, x);
 	assert(memcmp(arr, out, sizeof(arr)) == 0);
+	pass;
+}
+
+test(shl_n_u32) {
+	simd_u32 a = simd_shl(simd_u32(0x0F), 4);
+	assert(simd_get_lane(a, 0) == 0xF0);
+	pass;
+}
+
+test(shr_n_i32) {
+	simd_i32 a = simd_shr(simd_i32(0xF0000000), 28);
+	assert(simd_get_lane(a, 0) == 0xFFFFFFFF);
+	pass;
+}
+
+test(shr_n_u32) {
+	simd_u32 a = simd_shr(simd_u32(0xF0000000), 28);
+	assert(simd_get_lane(a, 0) == 0x0F);
+	pass;
+}
+
+test(shr_i32) {
+	simd_i32 a = simd_shr(simd_i32(0xF0000000), simd_i32(28));
+	assert(simd_get_lane(a, 0) == 0xFFFFFFFF);
+	pass;
+}
+
+test(shr_u32) {
+	simd_u32 a = simd_shr(simd_u32(0xF0000000), simd_i32(28));
+	assert(simd_get_lane(a, 0) == 0x0F);
 	pass;
 }

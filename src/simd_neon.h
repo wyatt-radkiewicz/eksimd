@@ -72,11 +72,11 @@ typedef __Float32x4_t simd_f32;
 			simd_f32: simd_u32(0))))
 
 // Initialization functions
-_simdapi simd_i8 simd_dup_n_i8(int8_t val) {
+_simdapi simd_i8 simd_init_n_i8(int8_t val) {
 	return (simd_i8){val, val, val, val, val, val, val, val,
 			 val, val, val, val, val, val, val, val};
 }
-_simdapi simd_i8 simd_n_i8(
+_simdapi simd_i8 simd_init_i8(
 	int8_t v0, int8_t v1, int8_t v2, int8_t v3, int8_t v4, int8_t v5,
 	int8_t v6, int8_t v7, int8_t v8, int8_t v9, int8_t v10, int8_t v11,
 	int8_t v12, int8_t v13, int8_t v14, int8_t v15) {
@@ -85,16 +85,17 @@ _simdapi simd_i8 simd_n_i8(
 }
 #define simd_i8(...)                                                           \
 	_simd_choose16(                                                        \
-		__VA_ARGS__, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,       \
-		simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,         \
-		simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,         \
-		simd_n_i8, simd_dup_n_i8)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_i8, simd_init_i8, simd_init_i8,         \
+		simd_init_i8, simd_init_i8, simd_init_i8, simd_init_i8,        \
+		simd_init_i8, simd_init_i8, simd_init_i8, simd_init_i8,        \
+		simd_init_i8, simd_init_i8, simd_init_i8, simd_init_i8,        \
+		simd_init_n_i8)(__VA_ARGS__)
 
-_simdapi simd_u8 simd_dup_n_u8(uint8_t val) {
+_simdapi simd_u8 simd_init_n_u8(uint8_t val) {
 	return (simd_u8){val, val, val, val, val, val, val, val,
 			 val, val, val, val, val, val, val, val};
 }
-_simdapi simd_u8 simd_n_u8(
+_simdapi simd_u8 simd_init_u8(
 	uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5,
 	uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10,
 	uint8_t v11, uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15) {
@@ -103,72 +104,73 @@ _simdapi simd_u8 simd_n_u8(
 }
 #define simd_u8(...)                                                           \
 	_simd_choose16(                                                        \
-		__VA_ARGS__, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,       \
-		simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,         \
-		simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,         \
-		simd_n_u8, simd_dup_n_u8)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_u8, simd_init_u8, simd_init_u8,         \
+		simd_init_u8, simd_init_u8, simd_init_u8, simd_init_u8,        \
+		simd_init_u8, simd_init_u8, simd_init_u8, simd_init_u8,        \
+		simd_init_u8, simd_init_u8, simd_init_u8, simd_init_u8,        \
+		simd_init_n_u8)(__VA_ARGS__)
 
-_simdapi simd_i16 simd_dup_n_i16(int16_t val) {
+_simdapi simd_i16 simd_init_n_i16(int16_t val) {
 	return (simd_i16){val, val, val, val, val, val, val, val};
 }
-_simdapi simd_i16 simd_n_i16(
+_simdapi simd_i16 simd_init_i16(
 	int16_t v0, int16_t v1, int16_t v2, int16_t v3, int16_t v4, int16_t v5,
 	int16_t v6, int16_t v7) {
 	return (simd_i16){v0, v1, v2, v3, v4, v5, v6, v7};
 }
 #define simd_i16(...)                                                          \
 	_simd_choose8(                                                         \
-		__VA_ARGS__, simd_n_i16, simd_n_i16, simd_n_i16, simd_n_i16,   \
-		simd_n_i16, simd_n_i16, simd_n_i16,                            \
-		simd_dup_n_i16)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_i16, simd_init_i16, simd_init_i16,      \
+		simd_init_i16, simd_init_i16, simd_init_i16, simd_init_i16,    \
+		simd_init_n_i16)(__VA_ARGS__)
 
-_simdapi simd_u16 simd_dup_n_u16(uint16_t val) {
+_simdapi simd_u16 simd_init_n_u16(uint16_t val) {
 	return (simd_u16){val, val, val, val, val, val, val, val};
 }
-_simdapi simd_u16 simd_n_u16(
+_simdapi simd_u16 simd_init_u16(
 	uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3, uint16_t v4,
 	uint16_t v5, uint16_t v6, uint16_t v7) {
 	return (simd_u16){v0, v1, v2, v3, v4, v5, v6, v7};
 }
 #define simd_u16(...)                                                          \
 	_simd_choose8(                                                         \
-		__VA_ARGS__, simd_n_u16, simd_n_u16, simd_n_u16, simd_n_u16,   \
-		simd_n_u16, simd_n_u16, simd_n_u16,                            \
-		simd_dup_n_u16)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_u16, simd_init_u16, simd_init_u16,      \
+		simd_init_u16, simd_init_u16, simd_init_u16, simd_init_u16,    \
+		simd_init_n_u16)(__VA_ARGS__)
 
-_simdapi simd_i32 simd_dup_n_i32(int32_t val) {
+_simdapi simd_i32 simd_init_n_i32(int32_t val) {
 	return (simd_i32){val, val, val, val};
 }
-_simdapi simd_i32 simd_n_i32(int32_t v0, int32_t v1, int32_t v2, int32_t v3) {
+_simdapi simd_i32 simd_init_i32(int32_t v0, int32_t v1, int32_t v2, int32_t v3) {
 	return (simd_i32){v0, v1, v2, v3};
 }
 #define simd_i32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_n_i32, simd_n_i32, simd_n_i32,               \
-		simd_dup_n_i32)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_i32, simd_init_i32, simd_init_i32,      \
+		simd_init_n_i32)(__VA_ARGS__)
 
-_simdapi simd_u32 simd_dup_n_u32(uint32_t val) {
+_simdapi simd_u32 simd_init_n_u32(uint32_t val) {
 	return (simd_u32){val, val, val, val};
 }
 _simdapi simd_u32
-simd_n_u32(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3) {
+simd_init_u32(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3) {
 	return (simd_u32){v0, v1, v2, v3};
 }
 #define simd_u32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_n_u32, simd_n_u32, simd_n_u32,               \
-		simd_dup_n_u32)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_u32, simd_init_u32, simd_init_u32,      \
+		simd_init_n_u32)(__VA_ARGS__)
 
-_simdapi simd_f32 simd_dup_n_f32(float val) {
+_simdapi simd_f32 simd_init_n_f32(float val) {
 	return (simd_f32){val, val, val, val};
 }
-_simdapi simd_f32 simd_n_f32(float v0, float v1, float v2, float v3) {
+_simdapi simd_f32 simd_init_f32(float v0, float v1, float v2, float v3) {
 	return (simd_f32){v0, v1, v2, v3};
 }
 #define simd_f32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_n_f32, simd_n_f32, simd_n_f32,               \
-		simd_dup_n_f32)(__VA_ARGS__)
+		__VA_ARGS__, simd_init_f32, simd_init_f32, simd_init_f32,      \
+		simd_init_n_f32)(__VA_ARGS__)
 
 // Getting and setting specific lanes
 #ifdef __clang__
@@ -905,11 +907,11 @@ _simdapi simd_f32 simd_recp_f32(simd_f32 val) {
 
 // Reciprocal Square Root Estimate
 #if __clang__
-_simdapi simd_f32 simd_recp_sqrt_f32(simd_f32 val) {
+_simdapi simd_f32 simd_sqrt_recp__f32(simd_f32 val) {
 	return (simd_f32)__builtin_neon_vrsqrteq_v((simd_i8)val, 41);
 }
 #else
-_simdapi simd_f32 simd_recp_sqrt_f32(simd_f32 val) {
+_simdapi simd_f32 simd_sqrt_recp_f32(simd_f32 val) {
 	return __builtin_aarch64_rsqrtev4sf(val);
 }
 #endif
@@ -1228,23 +1230,247 @@ _simdapi simd_f32 simd_mla_f32(simd_f32 acc, simd_f32 mul0, simd_f32 mul1) {
 		 simd_f32: simd_mla_f32)(_acc, _mul0, _mul1))
 
 // Shift left
+#if __clang__
+# define simd_shl(_simd, _shiftby)                                             \
+	 ((typeof(_simd))_Generic(                                             \
+		 _shiftby,                                                     \
+		  simd_i8: __builtin_neon_vshlq_v,                             \
+		  simd_u8: __builtin_neon_vshlq_v,                             \
+		  simd_i16: __builtin_neon_vshlq_v,                            \
+		  simd_u16: __builtin_neon_vshlq_v,                            \
+		  simd_i32: __builtin_neon_vshlq_v,                            \
+		  simd_u32: __builtin_neon_vshlq_v,                            \
+		  default: __builtin_neon_vshlq_n_v)(                          \
+		 _simd, _shiftby,                                              \
+		 _Generic(                                                     \
+			 _simd,                                                \
+			 simd_i8: 32,                                          \
+			 simd_u8: 48,                                          \
+			 simd_i16: 33,                                         \
+			 simd_u16: 49,                                         \
+			 simd_i32: 34,                                         \
+			 simd_u32: 50)))
+#else
+# define simd_shl(_simd, _shiftby)                                             \
+	 ((typeof(_simd))_Generic(                                             \
+		 _simd,                                                        \
+		  simd_i8: _Generic(                                           \
+			  _shiftby,                                            \
+			  simd_i8: __builtin_aarch64_sshlv16qi,                \
+			  simd_u8: __builtin_aarch64_sshlv16qi,                \
+			  default: __builtin_aarch64_ashlv16qi),               \
+		  simd_u8: _Generic(                                           \
+			  _shiftby,                                            \
+			  simd_i8: __builtin_aarch64_ushlv16qi_uus,            \
+			  simd_u8: __builtin_aarch64_ushlv16qi_uus,            \
+			  default: __builtin_aarch64_ashlv16qi),               \
+		  simd_i16: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i16: __builtin_aarch64_sshlv8hi,                \
+			  simd_u16: __builtin_aarch64_sshlv8hi,                \
+			  default: __builtin_aarch64_ashlv8hi),                \
+		  simd_u16: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i16: __builtin_aarch64_ushlv8hi_uus,            \
+			  simd_u16: __builtin_aarch64_ushlv8hi_uus,            \
+			  default: __builtin_aarch64_ashlv8hi),                \
+		  simd_i32: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i32: __builtin_aarch64_sshlv4si,                \
+			  simd_u32: __builtin_aarch64_sshlv4si,                \
+			  default: __builtin_aarch64_ashlv4si),                \
+		  simd_u32: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i32: __builtin_aarch64_ushlv4si_uus,            \
+			  simd_u32: __builtin_aarch64_ushlv4si_uus,            \
+			  default: __builtin_aarch64_ashlv4si))(               \
+		 _simd_lane_cast_type(_simd) _simd, _shiftby))
+#endif
+#define simd_shl_i8 simd_shl
+#define simd_shl_n_i8 simd_shl
+#define simd_shl_i16 simd_shl
+#define simd_shl_n_i16 simd_shl
+#define simd_shl_i32 simd_shl
+#define simd_shl_n_i32 simd_shl
+#define simd_shl_u8 simd_shl
+#define simd_shl_n_u8 simd_shl
+#define simd_shl_u16 simd_shl
+#define simd_shl_n_u16 simd_shl
+#define simd_shl_u32 simd_shl
+#define simd_shl_n_u32 simd_shl
+
 // Shift right
-// Shift left insert
-// Shift right insert
+#if __clang__
+# define simd_shr(_simd, _shiftby)                                             \
+	 ((typeof(_simd))_Generic(                                             \
+		 _shiftby,                                                     \
+		  simd_i8: __builtin_neon_vshlq_v,                             \
+		  simd_u8: __builtin_neon_vshlq_v,                             \
+		  simd_i16: __builtin_neon_vshlq_v,                            \
+		  simd_u16: __builtin_neon_vshlq_v,                            \
+		  simd_i32: __builtin_neon_vshlq_v,                            \
+		  simd_u32: __builtin_neon_vshlq_v,                            \
+		  default: __builtin_neon_vshrq_n_v)(                          \
+		 _simd,                                                        \
+		 _Generic(                                                     \
+			 _shiftby,                                             \
+			 simd_i8: -_shiftby,                                   \
+			 simd_u8: -_shiftby,                                   \
+			 simd_i16: -_shiftby,                                  \
+			 simd_u16: -_shiftby,                                  \
+			 simd_i32: -_shiftby,                                  \
+			 simd_u32: -_shiftby,                                  \
+			 default: _shiftby),                                   \
+		 _Generic(                                                     \
+			 _simd,                                                \
+			 simd_i8: 32,                                          \
+			 simd_u8: 48,                                          \
+			 simd_i16: 33,                                         \
+			 simd_u16: 49,                                         \
+			 simd_i32: 34,                                         \
+			 simd_u32: 50)))
+#else
+# define simd_shr(_simd, _shiftby)                                             \
+	 ((typeof(_simd))_Generic(                                             \
+		 _simd,                                                        \
+		  simd_i8: _Generic(                                           \
+			  _shiftby,                                            \
+			  simd_i8: __builtin_aarch64_sshlv16qi,                \
+			  simd_u8: __builtin_aarch64_sshlv16qi,                \
+			  default: __builtin_aarch64_ashrv16qi),               \
+		  simd_u8: _Generic(                                           \
+			  _shiftby,                                            \
+			  simd_i8: __builtin_aarch64_lshrv16qi_uus,            \
+			  simd_u8: __builtin_aarch64_lshrv16qi_uus,            \
+			  default: __builtin_aarch64_lshrv16qi_uus),           \
+		  simd_i16: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i16: __builtin_aarch64_sshlv8hi,                \
+			  simd_u16: __builtin_aarch64_sshlv8hi,                \
+			  default: __builtin_aarch64_ashrv8hi),                \
+		  simd_u16: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i16: __builtin_aarch64_ushlv8hi_uus,            \
+			  simd_u16: __builtin_aarch64_ushlv8hi_uus,            \
+			  default: __builtin_aarch64_lshrv8hi_uus),            \
+		  simd_i32: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i32: __builtin_aarch64_sshlv4si,                \
+			  simd_u32: __builtin_aarch64_sshlv4si,                \
+			  default: __builtin_aarch64_ashrv4si),                \
+		  simd_u32: _Generic(                                          \
+			  _shiftby,                                            \
+			  simd_i32: __builtin_aarch64_ushlv4si_uus,            \
+			  simd_u32: __builtin_aarch64_ushlv4si_uus,            \
+			  default: __builtin_aarch64_lshrv4si_uus))(           \
+		 _simd,                                                        \
+		 _Generic(                                                     \
+			 _shiftby,                                             \
+			 simd_i8: -_shiftby,                                   \
+			 simd_u8: -_shiftby,                                   \
+			 simd_i16: -_shiftby,                                  \
+			 simd_u16: -_shiftby,                                  \
+			 simd_i32: -_shiftby,                                  \
+			 simd_u32: -_shiftby,                                  \
+			 default: _shiftby)))
+#endif
+#define simd_shr_i8 simd_shr
+#define simd_shr_i16 simd_shr
+#define simd_shr_i32 simd_shr
+#define simd_shr_u8 simd_shr
+#define simd_shr_u16 simd_shr
+#define simd_shr_u32 simd_shr
+#define simd_shr_n_i8 simd_shr
+#define simd_shr_n_i16 simd_shr
+#define simd_shr_n_i32 simd_shr
+#define simd_shr_n_u8 simd_shr
+#define simd_shr_n_u16 simd_shr
+#define simd_shr_n_u32 simd_shr
 
 // Negate
+#define simd_neg(_simd) (-(_simd))
+#define simd_neg_i8 simd_neg
+#define simd_neg_i16 simd_neg
+#define simd_neg_i32 simd_neg
+#define simd_neg_f32 simd_neg
+
 // NOT
+#define simd_not(_simd) (~(_simd))
+#define simd_not_i8 simd_not
+#define simd_not_u8 simd_not
+#define simd_not_i16 simd_not
+#define simd_not_u16 simd_not
+#define simd_not_i32 simd_not
+#define simd_not_u32 simd_not
+
 // OR
+#define simd_or(_lhs, _rhs) ((_lhs) | (_rhs))
+#define simd_or_i8 simd_or
+#define simd_or_u8 simd_or
+#define simd_or_i16 simd_or
+#define simd_or_u16 simd_or
+#define simd_or_i32 simd_or
+#define simd_or_u32 simd_or
+
 // AND
+#define simd_and(_lhs, _rhs) ((_lhs) & (_rhs))
+#define simd_and_i8 simd_and
+#define simd_and_u8 simd_and
+#define simd_and_i16 simd_and
+#define simd_and_u16 simd_and
+#define simd_and_i32 simd_and
+#define simd_and_u32 simd_and
+
 // XOR
+#define simd_xor(_lhs, _rhs) ((_lhs) ^ (_rhs))
+#define simd_xor_i8 simd_xor
+#define simd_xor_u8 simd_xor
+#define simd_xor_i16 simd_xor
+#define simd_xor_u16 simd_xor
+#define simd_xor_i32 simd_xor
+#define simd_xor_u32 simd_xor
 
 // Compare Equal
-// Compare Not Equal
-// Compare Greater or equal to
-// Compare Less or equal to
-// Compare Greater
-// Compare Less
+#define simd_cmpeq(_lhs, _rhs) ((_lhs) == (_rhs))
+#define simd_cmpeq_i8 simd_cmpeq
+#define simd_cmpeq_u8 simd_cmpeq
+#define simd_cmpeq_i16 simd_cmpeq
+#define simd_cmpeq_u16 simd_cmpeq
+#define simd_cmpeq_i32 simd_cmpeq
+#define simd_cmpeq_u32 simd_cmpeq
 
-// Bitwise select
-// Population count
-// Count leading zeros
+// Compare Greater or equal to
+#define simd_cmpge(_lhs, _rhs) ((_lhs) >= (_rhs))
+#define simd_cmpge_i8 simd_cmpge
+#define simd_cmpge_u8 simd_cmpge
+#define simd_cmpge_i16 simd_cmpge
+#define simd_cmpge_u16 simd_cmpge
+#define simd_cmpge_i32 simd_cmpge
+#define simd_cmpge_u32 simd_cmpge
+
+// Compare Less or equal to
+#define simd_cmple(_lhs, _rhs) ((_lhs) <= (_rhs))
+#define simd_cmple_i8 simd_cmple
+#define simd_cmple_u8 simd_cmple
+#define simd_cmple_i16 simd_cmple
+#define simd_cmple_u16 simd_cmple
+#define simd_cmple_i32 simd_cmple
+#define simd_cmple_u32 simd_cmple
+
+// Compare Greater
+#define simd_cmpgt(_lhs, _rhs) ((_lhs) > (_rhs))
+#define simd_cmpgt_i8 simd_cmpgt
+#define simd_cmpgt_u8 simd_cmpgt
+#define simd_cmpgt_i16 simd_cmpgt
+#define simd_cmpgt_u16 simd_cmpgt
+#define simd_cmpgt_i32 simd_cmpgt
+#define simd_cmpgt_u32 simd_cmpgt
+
+// Compare Less
+#define simd_cmplt(_lhs, _rhs) ((_lhs) < (_rhs))
+#define simd_cmplt_i8 simd_cmplt
+#define simd_cmplt_u8 simd_cmplt
+#define simd_cmplt_i16 simd_cmplt
+#define simd_cmplt_u16 simd_cmplt
+#define simd_cmplt_i32 simd_cmplt
+#define simd_cmplt_u32 simd_cmplt
