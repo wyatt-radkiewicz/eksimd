@@ -295,7 +295,8 @@ test(rbit_u8) {
 }
 
 test(rev_i8) {
-	simd_i8 rev = simd_rev(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	simd_i8 rev = simd_rev(
+		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(rev, 0) == 15);
 	assert(simd_get_lane(rev, 5) == 10);
 	assert(simd_get_lane(rev, 10) == 5);
@@ -304,7 +305,8 @@ test(rev_i8) {
 }
 
 test(rev_u8) {
-	simd_u8 rev = simd_rev(simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	simd_u8 rev = simd_rev(
+		simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(rev, 0) == 15);
 	assert(simd_get_lane(rev, 5) == 10);
 	assert(simd_get_lane(rev, 10) == 5);
@@ -354,6 +356,68 @@ test(rev_f32) {
 	assert(simd_get_lane(rev, 1) == 2);
 	assert(simd_get_lane(rev, 2) == 1);
 	assert(simd_get_lane(rev, 3) == 0);
+	pass;
+}
+
+test(shuffle_i8) {
+	simd_i8 shuffled = simd_shuffle(
+		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+		0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3);
+	assert(simd_get_lane(shuffled, 0) == 0);
+	assert(simd_get_lane(shuffled, 4) == 1);
+	assert(simd_get_lane(shuffled, 8) == 2);
+	assert(simd_get_lane(shuffled, 12) == 3);
+	pass;
+}
+
+test(shl_lane_u32) {
+	simd_u32 shifted = simd_shl_lane(simd_u32(1, 2, 3, 4), 1);
+	assert(simd_get_lane(shifted, 0) == 0);
+	assert(simd_get_lane(shifted, 1) == 1);
+	assert(simd_get_lane(shifted, 2) == 2);
+	assert(simd_get_lane(shifted, 3) == 3);
+
+	shifted = simd_shl_lane(simd_u32(1, 2, 3, 4), 0);
+	assert(simd_get_lane(shifted, 0) == 1);
+	assert(simd_get_lane(shifted, 1) == 2);
+	assert(simd_get_lane(shifted, 2) == 3);
+	assert(simd_get_lane(shifted, 3) == 4);
+
+	shifted = simd_shl_lane(simd_u32(1, 2, 3, 4), 4);
+	assert(simd_get_lane(shifted, 0) == 0);
+	assert(simd_get_lane(shifted, 1) == 0);
+	assert(simd_get_lane(shifted, 2) == 0);
+	assert(simd_get_lane(shifted, 3) == 0);
+	pass;
+}
+
+test(shl_lane_f32) {
+	simd_f32 shifted = simd_shl_lane(simd_f32(1.5, 2.5, 3.5, 4.5), 1);
+	assert(simd_get_lane(shifted, 0) == 0);
+	assert(simd_get_lane(shifted, 1) == 1.5);
+	assert(simd_get_lane(shifted, 2) == 2.5);
+	assert(simd_get_lane(shifted, 3) == 3.5);
+	pass;
+}
+
+test(shr_lane_u32) {
+	simd_u32 shifted = simd_shr_lane(simd_u32(1, 2, 3, 4), 1);
+	assert(simd_get_lane(shifted, 0) == 2);
+	assert(simd_get_lane(shifted, 1) == 3);
+	assert(simd_get_lane(shifted, 2) == 4);
+	assert(simd_get_lane(shifted, 3) == 0);
+
+	shifted = simd_shr_lane(simd_u32(1, 2, 3, 4), 0);
+	assert(simd_get_lane(shifted, 0) == 1);
+	assert(simd_get_lane(shifted, 1) == 2);
+	assert(simd_get_lane(shifted, 2) == 3);
+	assert(simd_get_lane(shifted, 3) == 4);
+
+	shifted = simd_shr_lane(simd_u32(1, 2, 3, 4), 4);
+	assert(simd_get_lane(shifted, 0) == 0);
+	assert(simd_get_lane(shifted, 1) == 0);
+	assert(simd_get_lane(shifted, 2) == 0);
+	assert(simd_get_lane(shifted, 3) == 0);
 	pass;
 }
 
