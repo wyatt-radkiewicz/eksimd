@@ -355,32 +355,6 @@ _simdapi simd_f32 simd_f32_cvt_u32(simd_u32 val) {
 // Reinterpret Cast
 #define simd_reinterpret(_toty, _simd) ((_toty)(_simd))
 
-// Reverse bits in each byte
-#if __clang__
-# define simd_rbit_i8(_simd)                                                   \
-	 (simd_i8) __builtin_neon_vrbitq_v((simd_i8)_simd, 32)
-# define simd_rbit_u8(_simd)                                                   \
-	 (simd_u8) __builtin_neon_vrbitq_v((simd_i8)_simd, 48)
-# define simd_rbit(_simd)                                                      \
-	 ((typeof(_simd))_Generic(                                             \
-		 _simd,                                                        \
-		  simd_i8: __builtin_neon_vrbitq_v,                            \
-		  simd_u8: __builtin_neon_vrbitq_v)(                           \
-		 _simd_lane_cast_type(_simd) _simd,                            \
-		 _Generic(_simd, simd_i8: 32, simd_u8: 48)))
-#else
-# define simd_rbit_i8(_simd)                                                   \
-	 (simd_i8) __builtin_aarch64_rbitv16qi((simd_i8)_simd)
-# define simd_rbit_u8(_simd)                                                   \
-	 (simd_u8) __builtin_aarch64_rbitv16qi((simd_i8)_simd)
-# define simd_rbit(_simd)                                                      \
-	 ((typeof(_simd))_Generic(                                             \
-		 _simd,                                                        \
-		  simd_i8: __builtin_aarch64_rbitv16qi,                        \
-		  simd_u8: __builtin_aarch64_rbitv16qi)(                       \
-		 _simd_lane_cast_type(_simd) _simd))
-#endif
-
 // Shuffle builtin on clang and GCC
 #if __clang__
 # define _simd_shuffle(_simd0, _simd1, ...)                                    \
@@ -917,18 +891,341 @@ _simdapi simd_u16 simd_narrow_hi_u32(simd_u32 val) {
 #define simd_div_u32 simd_div
 #define simd_div_f32 simd_div
 
-// Reciprocal
+// Reciprocal Estimate
+#if __clang__
+_simdapi simd_f32 simd_recp_f32(simd_f32 val) {
+	return (simd_f32)__builtin_neon_vrecpeq_v((simd_i8)val, 41);
+}
+#else
+_simdapi simd_f32 simd_recp_f32(simd_f32 val) {
+	return __builtin_aarch64_frecpev4sf(val);
+}
+#endif
+#define simd_recp simd_recp_f32
+
+// Reciprocal Square Root Estimate
+#if __clang__
+_simdapi simd_f32 simd_recp_sqrt_f32(simd_f32 val) {
+	return (simd_f32)__builtin_neon_vrsqrteq_v((simd_i8)val, 41);
+}
+#else
+_simdapi simd_f32 simd_recp_sqrt_f32(simd_f32 val) {
+	return __builtin_aarch64_rsqrtev4sf(val);
+}
+#endif
+#define simd_recp_sqrt simd_recp_sqrt_f32
+
 // Absolute
+#if __clang__
+_simdapi simd_i8 simd_abs_i8(simd_i8 val) {
+	return (simd_i8)__builtin_neon_vabsq_v((simd_i8)val, 32);
+}
+_simdapi simd_i16 simd_abs_i16(simd_i16 val) {
+	return (simd_i16)__builtin_neon_vabsq_v((simd_i8)val, 33);
+}
+_simdapi simd_i32 simd_abs_i32(simd_i32 val) {
+	return (simd_i32)__builtin_neon_vabsq_v((simd_i8)val, 34);
+}
+_simdapi simd_f32 simd_abs_f32(simd_f32 val) {
+	return (simd_f32)__builtin_neon_vabsq_v((simd_i8)val, 41);
+}
+#else
+_simdapi simd_i8 simd_abs_i8(simd_i8 val) {
+	return __builtin_aarch64_absv16qi(val);
+}
+_simdapi simd_i16 simd_abs_i16(simd_i16 val) {
+	return __builtin_aarch64_absv8hi(val);
+}
+_simdapi simd_i32 simd_abs_i32(simd_i32 val) {
+	return __builtin_aarch64_absv4si(val);
+}
+_simdapi simd_f32 simd_abs_f32(simd_f32 val) {
+	return __builtin_aarch64_absv4sf(val);
+}
+#endif
+#define simd_abs(_simd)                                                        \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_abs_i8,                                         \
+		 simd_i16: simd_abs_i16,                                       \
+		 simd_i32: simd_abs_i32,                                       \
+		 simd_f32: simd_abs_f32)(_simd))
+
 // Maximum
+#if __clang__
+_simdapi simd_i8 simd_max_i8(simd_i8 a, simd_i8 b) {
+	return (simd_i8)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 32);
+}
+_simdapi simd_u8 simd_max_u8(simd_u8 a, simd_u8 b) {
+	return (simd_u8)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 48);
+}
+_simdapi simd_i16 simd_max_i16(simd_i16 a, simd_i16 b) {
+	return (simd_i16)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 33);
+}
+_simdapi simd_u16 simd_max_u16(simd_u16 a, simd_u16 b) {
+	return (simd_u16)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 49);
+}
+_simdapi simd_i32 simd_max_i32(simd_i32 a, simd_i32 b) {
+	return (simd_i32)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 34);
+}
+_simdapi simd_u32 simd_max_u32(simd_u32 a, simd_u32 b) {
+	return (simd_u32)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 50);
+}
+_simdapi simd_f32 simd_max_f32(simd_u32 a, simd_u32 b) {
+	return (simd_f32)__builtin_neon_vmaxq_v((simd_i8)a, (simd_i8)b, 41);
+}
+#else
+_simdapi simd_i8 simd_max_i8(simd_i8 a, simd_i8 b) {
+	return __builtin_aarch64_smaxv16qi(a, b);
+}
+_simdapi simd_u8 simd_max_u8(simd_u8 a, simd_u8 b) {
+	return (simd_u8)__builtin_aarch64_umaxv16qi((simd_i8)a, (simd_i8)b);
+}
+_simdapi simd_i16 simd_max_i16(simd_i16 a, simd_i16 b) {
+	return __builtin_aarch64_smaxv8hi(a, b);
+}
+_simdapi simd_u16 simd_max_u16(simd_u16 a, simd_u16 b) {
+	return (simd_u16)__builtin_aarch64_umaxv8hi((simd_i16)a, (simd_i16)b);
+}
+_simdapi simd_i32 simd_max_i32(simd_i32 a, simd_i32 b) {
+	return __builtin_aarch64_smaxv4si(a, b);
+}
+_simdapi simd_u32 simd_max_u32(simd_u32 a, simd_u32 b) {
+	return (simd_u32)__builtin_aarch64_umaxv4si((simd_i32)a, (simd_i32)b);
+}
+_simdapi simd_f32 simd_max_f32(simd_f32 a, simd_f32 b) {
+	return (simd_f32)__builtin_aarch64_fmax_nanv4sf(a, b);
+}
+#endif
+#define simd_max(_a, _b)                                                       \
+	(_Generic(                                                             \
+		_a,                                                            \
+		 simd_i8: simd_max_i8,                                         \
+		 simd_u8: simd_max_u8,                                         \
+		 simd_i16: simd_max_i16,                                       \
+		 simd_u16: simd_max_u16,                                       \
+		 simd_i32: simd_max_i32,                                       \
+		 simd_u32: simd_max_u32,                                       \
+		 simd_f32: simd_max_f32)(_a, _b))
+
 // Minimum
-// Round
+#if __clang__
+_simdapi simd_i8 simd_min_i8(simd_i8 a, simd_i8 b) {
+	return (simd_i8)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 32);
+}
+_simdapi simd_u8 simd_min_u8(simd_u8 a, simd_u8 b) {
+	return (simd_u8)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 48);
+}
+_simdapi simd_i16 simd_min_i16(simd_i16 a, simd_i16 b) {
+	return (simd_i16)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 33);
+}
+_simdapi simd_u16 simd_min_u16(simd_u16 a, simd_u16 b) {
+	return (simd_u16)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 49);
+}
+_simdapi simd_i32 simd_min_i32(simd_i32 a, simd_i32 b) {
+	return (simd_i32)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 34);
+}
+_simdapi simd_u32 simd_min_u32(simd_u32 a, simd_u32 b) {
+	return (simd_u32)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 50);
+}
+_simdapi simd_f32 simd_min_f32(simd_u32 a, simd_u32 b) {
+	return (simd_f32)__builtin_neon_vminq_v((simd_i8)a, (simd_i8)b, 41);
+}
+#else
+_simdapi simd_i8 simd_min_i8(simd_i8 a, simd_i8 b) {
+	return __builtin_aarch64_sminv16qi(a, b);
+}
+_simdapi simd_u8 simd_min_u8(simd_u8 a, simd_u8 b) {
+	return (simd_u8)__builtin_aarch64_uminv16qi((simd_i8)a, (simd_i8)b);
+}
+_simdapi simd_i16 simd_min_i16(simd_i16 a, simd_i16 b) {
+	return __builtin_aarch64_sminv8hi(a, b);
+}
+_simdapi simd_u16 simd_min_u16(simd_u16 a, simd_u16 b) {
+	return (simd_u16)__builtin_aarch64_uminv8hi((simd_i16)a, (simd_i16)b);
+}
+_simdapi simd_i32 simd_min_i32(simd_i32 a, simd_i32 b) {
+	return __builtin_aarch64_sminv4si(a, b);
+}
+_simdapi simd_u32 simd_min_u32(simd_u32 a, simd_u32 b) {
+	return (simd_u32)__builtin_aarch64_uminv4si((simd_i32)a, (simd_i32)b);
+}
+_simdapi simd_f32 simd_min_f32(simd_f32 a, simd_f32 b) {
+	return (simd_f32)__builtin_aarch64_fmin_nanv4sf(a, b);
+}
+#endif
+#define simd_min(_a, _b)                                                       \
+	(_Generic(                                                             \
+		_a,                                                            \
+		 simd_i8: simd_min_i8,                                         \
+		 simd_u8: simd_min_u8,                                         \
+		 simd_i16: simd_min_i16,                                       \
+		 simd_u16: simd_min_u16,                                       \
+		 simd_i32: simd_min_i32,                                       \
+		 simd_u32: simd_min_u32,                                       \
+		 simd_f32: simd_min_f32)(_a, _b))
+
 // Square Root
+#if __clang__
+_simdapi simd_f32 simd_rnd_f32(simd_f32 val) {
+	return (simd_f32)__builtin_neon_vsqrtq_v((simd_i8)val, 41);
+}
+#else
+_simdapi simd_f32 simd_rnd_f32(simd_f32 val) {
+	return __builtin_aarch64_sqrtv4sf(val);
+}
+#endif
+#define simd_rnd simd_rnd_f32
+
 // Pairwise Addition
+#if __clang__
+_simdapi simd_i8 simd_padd_i8(simd_i8 a, simd_i8 b) {
+	return (simd_i8)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 32);
+}
+_simdapi simd_u8 simd_padd_u8(simd_u8 a, simd_u8 b) {
+	return (simd_u8)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 48);
+}
+_simdapi simd_i16 simd_padd_i16(simd_i16 a, simd_i16 b) {
+	return (simd_i16)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 33);
+}
+_simdapi simd_u16 simd_padd_u16(simd_u16 a, simd_u16 b) {
+	return (simd_u16)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 49);
+}
+_simdapi simd_i32 simd_padd_i32(simd_i32 a, simd_i32 b) {
+	return (simd_i32)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 34);
+}
+_simdapi simd_u32 simd_padd_u32(simd_u32 a, simd_u32 b) {
+	return (simd_u32)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 50);
+}
+_simdapi simd_f32 simd_padd_f32(simd_f32 a, simd_f32 b) {
+	return (simd_f32)__builtin_neon_vpaddq_v((simd_i8)a, (simd_i8)b, 41);
+}
+#else
+_simdapi simd_i8 simd_padd_i8(simd_i8 a, simd_i8 b) {
+	return __builtin_aarch64_addpv16qi(a, b);
+}
+_simdapi simd_u8 simd_padd_u8(simd_u8 a, simd_u8 b) {
+	return __builtin_aarch64_addpv16qi_uuu(a, b);
+}
+_simdapi simd_i16 simd_padd_i16(simd_i16 a, simd_i16 b) {
+	return __builtin_aarch64_addpv8hi(a, b);
+}
+_simdapi simd_u16 simd_padd_u16(simd_u16 a, simd_u16 b) {
+	return __builtin_aarch64_addpv8hi_uuu(a, b);
+}
+_simdapi simd_i32 simd_padd_i32(simd_i32 a, simd_i32 b) {
+	return __builtin_aarch64_addpv4si(a, b);
+}
+_simdapi simd_u32 simd_padd_u32(simd_u32 a, simd_u32 b) {
+	return __builtin_aarch64_addpv4si_uuu(a, b);
+}
+_simdapi simd_f32 simd_padd_f32(simd_f32 a, simd_f32 b) {
+	return __builtin_aarch64_faddpv4sf(a, b);
+}
+#endif
+#define simd_padd(_a, _b)                                                      \
+	(_Generic(                                                             \
+		_a,                                                            \
+		 simd_i8: simd_padd_i8,                                        \
+		 simd_u8: simd_padd_u8,                                        \
+		 simd_i16: simd_padd_i16,                                      \
+		 simd_u16: simd_padd_u16,                                      \
+		 simd_i32: simd_padd_i32,                                      \
+		 simd_u32: simd_padd_u32,                                      \
+		 simd_f32: simd_padd_f32)(_a, _b))
+
 // Pairwise Addition with Widen
-// Addition Across
-// Maxmumum Across
-// Minumum Across
-// Multiply 
+#if __clang__
+_simdapi simd_i16 simd_padd_widen_i8(simd_i8 val) {
+	return (simd_i16)__builtin_neon_vpaddlq_v(val, 33);
+}
+_simdapi simd_u16 simd_padd_widen_u8(simd_u8 val) {
+	return (simd_u16)__builtin_neon_vpaddlq_v(val, 49);
+}
+_simdapi simd_i32 simd_padd_widen_i16(simd_i16 val) {
+	return (simd_i32)__builtin_neon_vpaddlq_v(val, 34);
+}
+_simdapi simd_u32 simd_padd_widen_u16(simd_u16 val) {
+	return (simd_u32)__builtin_neon_vpaddlq_v(val, 50);
+}
+#else
+_simdapi simd_i16 simd_padd_widen_i8(simd_i8 val) {
+	return __builtin_aarch64_saddlpv16qi(val);
+}
+_simdapi simd_u16 simd_padd_widen_u8(simd_u8 val) {
+	return __builtin_aarch64_uaddlpv16qi_uu(val);
+}
+_simdapi simd_i32 simd_padd_widen_i16(simd_i16 val) {
+	return __builtin_aarch64_saddlpv8hi(val);
+}
+_simdapi simd_u32 simd_padd_widen_u16(simd_u16 val) {
+	return __builtin_aarch64_uaddlpv8hi_uu(val);
+}
+#endif
+#define simd_padd_widen(_simd)                                                 \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_padd_widen_i8,                                  \
+		 simd_u8: simd_padd_widen_u8,                                  \
+		 simd_i16: simd_padd_widen_i16,                                \
+		 simd_u16: simd_padd_widen_u16)(_simd))
+
+// Multiply Addition
+#if __clang__
+_simdapi simd_i8 simd_mla_i8(simd_i8 acc, simd_i8 mul0, simd_i8 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_u8 simd_mla_u8(simd_u8 acc, simd_u8 mul0, simd_u8 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_i16 simd_mla_i16(simd_i16 acc, simd_i16 mul0, simd_i16 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_u16 simd_mla_u16(simd_u16 acc, simd_u16 mul0, simd_u16 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_i32 simd_mla_i32(simd_i32 acc, simd_i32 mul0, simd_i32 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_u32 simd_mla_u32(simd_u32 acc, simd_u32 mul0, simd_u32 mul1) {
+	return acc + mul0 * mul1;
+}
+_simdapi simd_f32 simd_mla_f32(simd_f32 acc, simd_f32 mul0, simd_f32 mul1) {
+	return acc + mul0 * mul1;
+}
+#else
+_simdapi simd_i8 simd_mla_i8(simd_i8 acc, simd_i8 mul0, simd_i8 mul1) {
+	return __builtin_aarch64_mlav16qi(acc, mul0, mul1);
+}
+_simdapi simd_u8 simd_mla_u8(simd_u8 acc, simd_u8 mul0, simd_u8 mul1) {
+	return __builtin_aarch64_mlav16qi_uuuu(acc, mul0, mul1);
+}
+_simdapi simd_i16 simd_mla_i16(simd_i16 acc, simd_i16 mul0, simd_i16 mul1) {
+	return __builtin_aarch64_mlav8hi(acc, mul0, mul1);
+}
+_simdapi simd_u16 simd_mla_u16(simd_u16 acc, simd_u16 mul0, simd_u16 mul1) {
+	return __builtin_aarch64_mlav8hi_uuuu(acc, mul0, mul1);
+}
+_simdapi simd_i32 simd_mla_i32(simd_i32 acc, simd_i32 mul0, simd_i32 mul1) {
+	return __builtin_aarch64_mlav4si(acc, mul0, mul1);
+}
+_simdapi simd_u32 simd_mla_u32(simd_u32 acc, simd_u32 mul0, simd_u32 mul1) {
+	return __builtin_aarch64_mlav4si_uuuu(acc, mul0, mul1);
+}
+_simdapi simd_f32 simd_mla_f32(simd_f32 acc, simd_f32 mul0, simd_f32 mul1) {
+	return __builtin_aarch64_float_mlav4sf(acc, mul0, mul1);
+}
+#endif
+#define simd_mla(_acc, _mul0, _mul1)                                           \
+	(_Generic(                                                             \
+		_acc,                                                          \
+		 simd_i8: simd_mla_i8,                                         \
+		 simd_u8: simd_mla_u8,                                         \
+		 simd_i16: simd_mla_i16,                                       \
+		 simd_u16: simd_mla_u16,                                       \
+		 simd_i32: simd_mla_i32,                                       \
+		 simd_u32: simd_mla_u32,                                       \
+		 simd_f32: simd_mla_f32)(_acc, _mul0, _mul1))
 
 // Shift left
 // Shift right

@@ -1,5 +1,5 @@
-#include "test.h"
 #include "simd_common.h"
+#include "test.h"
 
 test(init_i8) {
 	simd_i8 one_typed = simd_dup_n_i8(0);
@@ -281,26 +281,6 @@ test(u32_reinterpret_f32) {
 	pass;
 }
 
-test(rbit_i8) {
-	assert(simd_get_lane(
-		       simd_rbit(simd_i8(
-			       0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
-			       0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F)),
-		       0)
-	       == (int8_t)0xF0);
-	pass;
-}
-
-test(rbit_u8) {
-	assert(simd_get_lane(
-		       simd_rbit(simd_u8(
-			       0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
-			       0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F)),
-		       0)
-	       == 0xF0);
-	pass;
-}
-
 test(rev_i8) {
 	simd_i8 rev = simd_rev(
 		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
@@ -429,7 +409,7 @@ test(shr_lane_u32) {
 }
 
 test(u32_ld) {
-	simd_u32 x = simd_ld_u32((uint32_t[4]){ 1, 3, 3, 7 });
+	simd_u32 x = simd_ld_u32((uint32_t[4]){1, 3, 3, 7});
 	assert(simd_get_lane(x, 0) == 1);
 	assert(simd_get_lane(x, 1) == 3);
 	assert(simd_get_lane(x, 2) == 3);
@@ -448,13 +428,15 @@ test(u32_st) {
 }
 
 test(widen_lo_i8) {
-	simd_i16 x = simd_widen_lo(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	simd_i16 x = simd_widen_lo(
+		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(x, 0) == 0);
 	pass;
 }
 
 test(widen_hi_i8) {
-	simd_i16 x = simd_widen_hi(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	simd_i16 x = simd_widen_hi(
+		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(x, 0) == 8);
 	pass;
 }
@@ -473,8 +455,8 @@ test(widen_hi_i16) {
 
 test(narrow_lo_i32) {
 	simd_i16 x = simd_narrow_lo(simd_i32(0, 1, 2, 3));
-	int16_t arr[8] = { 0, 1, 2, 3, 0, 0, 0, 0 };
-	int16_t out[8];
+	int16_t	 arr[8] = {0, 1, 2, 3, 0, 0, 0, 0};
+	int16_t	 out[8];
 	simd_st(out, x);
 	assert(memcmp(arr, out, sizeof(arr)) == 0);
 	pass;
@@ -482,10 +464,9 @@ test(narrow_lo_i32) {
 
 test(narrow_hi_i32) {
 	simd_i16 x = simd_narrow_hi(simd_i32(0, 1, 2, 3));
-	int16_t arr[8] = { 0, 0, 0, 0, 0, 1, 2, 3 };
-	int16_t out[8];
+	int16_t	 arr[8] = {0, 0, 0, 0, 0, 1, 2, 3};
+	int16_t	 out[8];
 	simd_st(out, x);
 	assert(memcmp(arr, out, sizeof(arr)) == 0);
 	pass;
 }
-
