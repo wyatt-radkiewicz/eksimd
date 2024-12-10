@@ -274,6 +274,13 @@ test(f32_cvt_u32) {
 	pass;
 }
 
+test(f32_reinterpret_u32) {
+	simd_f32 from = simd_f32(1.0);
+	simd_u32 to = simd_reinterpret(from, simd_u32);
+	assert(simd_get_lane(to, 0) == 0x3F800000);
+	pass;
+}
+
 test(rbit_i8) {
 	assert(simd_get_lane(
 		       simd_rbit(simd_i8(
