@@ -72,11 +72,11 @@ typedef __Float32x4_t simd_f32;
 			simd_f32: simd_u32(0))))
 
 // Initialization functions
-_simdapi simd_i8 simd_i8_dup_n(int8_t val) {
+_simdapi simd_i8 simd_dup_n_i8(int8_t val) {
 	return (simd_i8){val, val, val, val, val, val, val, val,
 			 val, val, val, val, val, val, val, val};
 }
-_simdapi simd_i8 simd_i8_n(
+_simdapi simd_i8 simd_n_i8(
 	int8_t v0, int8_t v1, int8_t v2, int8_t v3, int8_t v4, int8_t v5,
 	int8_t v6, int8_t v7, int8_t v8, int8_t v9, int8_t v10, int8_t v11,
 	int8_t v12, int8_t v13, int8_t v14, int8_t v15) {
@@ -85,16 +85,16 @@ _simdapi simd_i8 simd_i8_n(
 }
 #define simd_i8(...)                                                           \
 	_simd_choose16(                                                        \
-		__VA_ARGS__, simd_i8_n, simd_i8_n, simd_i8_n, simd_i8_n,       \
-		simd_i8_n, simd_i8_n, simd_i8_n, simd_i8_n, simd_i8_n,         \
-		simd_i8_n, simd_i8_n, simd_i8_n, simd_i8_n, simd_i8_n,         \
-		simd_i8_n, simd_i8_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,       \
+		simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,         \
+		simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8, simd_n_i8,         \
+		simd_n_i8, simd_dup_n_i8)(__VA_ARGS__)
 
-_simdapi simd_u8 simd_u8_dup_n(uint8_t val) {
+_simdapi simd_u8 simd_dup_n_u8(uint8_t val) {
 	return (simd_u8){val, val, val, val, val, val, val, val,
 			 val, val, val, val, val, val, val, val};
 }
-_simdapi simd_u8 simd_u8_n(
+_simdapi simd_u8 simd_n_u8(
 	uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5,
 	uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10,
 	uint8_t v11, uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15) {
@@ -103,89 +103,75 @@ _simdapi simd_u8 simd_u8_n(
 }
 #define simd_u8(...)                                                           \
 	_simd_choose16(                                                        \
-		__VA_ARGS__, simd_u8_n, simd_u8_n, simd_u8_n, simd_u8_n,       \
-		simd_u8_n, simd_u8_n, simd_u8_n, simd_u8_n, simd_u8_n,         \
-		simd_u8_n, simd_u8_n, simd_u8_n, simd_u8_n, simd_u8_n,         \
-		simd_u8_n, simd_u8_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,       \
+		simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,         \
+		simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8, simd_n_u8,         \
+		simd_n_u8, simd_dup_n_u8)(__VA_ARGS__)
 
-_simdapi simd_i16 simd_i16_dup_n(int16_t val) {
+_simdapi simd_i16 simd_dup_n_i16(int16_t val) {
 	return (simd_i16){val, val, val, val, val, val, val, val};
 }
-_simdapi simd_i16 simd_i16_n(
+_simdapi simd_i16 simd_n_i16(
 	int16_t v0, int16_t v1, int16_t v2, int16_t v3, int16_t v4, int16_t v5,
 	int16_t v6, int16_t v7) {
 	return (simd_i16){v0, v1, v2, v3, v4, v5, v6, v7};
 }
 #define simd_i16(...)                                                          \
 	_simd_choose8(                                                         \
-		__VA_ARGS__, simd_i16_n, simd_i16_n, simd_i16_n, simd_i16_n,   \
-		simd_i16_n, simd_i16_n, simd_i16_n,                            \
-		simd_i16_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_i16, simd_n_i16, simd_n_i16, simd_n_i16,   \
+		simd_n_i16, simd_n_i16, simd_n_i16,                            \
+		simd_dup_n_i16)(__VA_ARGS__)
 
-_simdapi simd_u16 simd_u16_dup_n(uint16_t val) {
+_simdapi simd_u16 simd_dup_n_u16(uint16_t val) {
 	return (simd_u16){val, val, val, val, val, val, val, val};
 }
-_simdapi simd_u16 simd_u16_n(
+_simdapi simd_u16 simd_n_u16(
 	uint16_t v0, uint16_t v1, uint16_t v2, uint16_t v3, uint16_t v4,
 	uint16_t v5, uint16_t v6, uint16_t v7) {
 	return (simd_u16){v0, v1, v2, v3, v4, v5, v6, v7};
 }
 #define simd_u16(...)                                                          \
 	_simd_choose8(                                                         \
-		__VA_ARGS__, simd_u16_n, simd_u16_n, simd_u16_n, simd_u16_n,   \
-		simd_u16_n, simd_u16_n, simd_u16_n,                            \
-		simd_u16_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_u16, simd_n_u16, simd_n_u16, simd_n_u16,   \
+		simd_n_u16, simd_n_u16, simd_n_u16,                            \
+		simd_dup_n_u16)(__VA_ARGS__)
 
-_simdapi simd_i32 simd_i32_dup_n(int32_t val) {
+_simdapi simd_i32 simd_dup_n_i32(int32_t val) {
 	return (simd_i32){val, val, val, val};
 }
-_simdapi simd_i32 simd_i32_n(int32_t v0, int32_t v1, int32_t v2, int32_t v3) {
+_simdapi simd_i32 simd_n_i32(int32_t v0, int32_t v1, int32_t v2, int32_t v3) {
 	return (simd_i32){v0, v1, v2, v3};
 }
 #define simd_i32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_i32_n, simd_i32_n, simd_i32_n,               \
-		simd_i32_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_i32, simd_n_i32, simd_n_i32,               \
+		simd_dup_n_i32)(__VA_ARGS__)
 
-_simdapi simd_u32 simd_u32_dup_n(uint32_t val) {
+_simdapi simd_u32 simd_dup_n_u32(uint32_t val) {
 	return (simd_u32){val, val, val, val};
 }
 _simdapi simd_u32
-simd_u32_n(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3) {
+simd_n_u32(uint32_t v0, uint32_t v1, uint32_t v2, uint32_t v3) {
 	return (simd_u32){v0, v1, v2, v3};
 }
 #define simd_u32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_u32_n, simd_u32_n, simd_u32_n,               \
-		simd_u32_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_u32, simd_n_u32, simd_n_u32,               \
+		simd_dup_n_u32)(__VA_ARGS__)
 
-_simdapi simd_f32 simd_f32_dup_n(float val) {
+_simdapi simd_f32 simd_dup_n_f32(float val) {
 	return (simd_f32){val, val, val, val};
 }
-_simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
+_simdapi simd_f32 simd_n_f32(float v0, float v1, float v2, float v3) {
 	return (simd_f32){v0, v1, v2, v3};
 }
 #define simd_f32(...)                                                          \
 	_simd_choose4(                                                         \
-		__VA_ARGS__, simd_f32_n, simd_f32_n, simd_f32_n,               \
-		simd_f32_dup_n)(__VA_ARGS__)
+		__VA_ARGS__, simd_n_f32, simd_n_f32, simd_n_f32,               \
+		simd_dup_n_f32)(__VA_ARGS__)
 
 // Getting and setting specific lanes
 #ifdef __clang__
-# define simd_i8_get_lane(_simd, _lane)                                        \
-	 (int8_t)__builtin_neon_vgetq_lane_i8((simd_i8)_simd, _lane)
-# define simd_u8_get_lane(_simd, _lane)                                        \
-	 (uint8_t)__builtin_neon_vgetq_lane_i8((simd_u8)_simd, _lane)
-# define simd_i16_get_lane(_simd, _lane)                                       \
-	 (int16_t)__builtin_neon_vgetq_lane_i16((simd_i16)_simd, _lane)
-# define simd_u16_get_lane(_simd, _lane)                                       \
-	 (uint16_t)__builtin_neon_vgetq_lane_i16((simd_u16)_simd, _lane)
-# define simd_i32_get_lane(_simd, _lane)                                       \
-	 (int32_t)__builtin_neon_vgetq_lane_i32((simd_i32)_simd, _lane)
-# define simd_u32_get_lane(_simd, _lane)                                       \
-	 (uint32_t)__builtin_neon_vgetq_lane_i32((simd_u32)_simd, _lane)
-# define simd_f32_get_lane(_simd, _lane)                                       \
-	 (float)__builtin_neon_vgetq_lane_f32((simd_f32)_simd, _lane)
 # define simd_get_lane(_simd, _lane)                                           \
 	 (_simd_lanetype(_simd) _Generic(                                      \
 		 _simd,                                                        \
@@ -197,21 +183,14 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 		  simd_u32: __builtin_neon_vgetq_lane_i32,                     \
 		  simd_f32: __builtin_neon_vgetq_lane_f32)(                    \
 		 _simd_lane_cast_type(_simd) _simd, _lane))
+# define simd_get_lane_i8 simd_get_lane
+# define simd_get_lane_u8 simd_get_lane
+# define simd_get_lane_i16 simd_get_lane
+# define simd_get_lane_u16 simd_get_lane
+# define simd_get_lane_i32 simd_get_lane
+# define simd_get_lane_u32 simd_get_lane
+# define simd_get_lane_f32 simd_get_lane
 
-# define simd_i8_set_lane(_val, _simd, _lane)                                  \
-	 (simd_i8) __builtin_neon_vsetq_lane_i8(_val, (simd_i8)_simd, _lane)
-# define simd_u8_set_lane(_val, _simd, _lane)                                  \
-	 (simd_u8) __builtin_neon_vsetq_lane_i8(_val, (simd_u8)_simd, _lane)
-# define simd_i16_set_lane(_val, _simd, _lane)                                 \
-	 (simd_i16) __builtin_neon_vsetq_lane_i16(_val, (simd_i16)_simd, _lane)
-# define simd_u16_set_lane(_val, _simd, _lane)                                 \
-	 (simd_u16) __builtin_neon_vsetq_lane_i16(_val, (simd_u16)_simd, _lane)
-# define simd_i32_set_lane(_val, _simd, _lane)                                 \
-	 (simd_i32) __builtin_neon_vsetq_lane_i32(_val, (simd_i32)_simd, _lane)
-# define simd_u32_set_lane(_val, _simd, _lane)                                 \
-	 (simd_u32) __builtin_neon_vsetq_lane_i32(_val, (simd_u32)_simd, _lane)
-# define simd_f32_set_lane(_val, _simd, _lane)                                 \
-	 (simd_f32) __builtin_neon_vsetq_lane_f32(_val, (simd_f32)_simd, _lane)
 # define simd_set_lane(_val, _simd, _lane)                                     \
 	 ((typeof(_simd))_Generic(                                             \
 		 _simd,                                                        \
@@ -223,6 +202,13 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 		  simd_u32: __builtin_neon_vsetq_lane_i32,                     \
 		  simd_f32: __builtin_neon_vsetq_lane_f32)(                    \
 		 _val, _simd_lane_cast_type(_simd) _simd, _lane))
+# define simd_set_lane_i8 simd_set_lane
+# define simd_set_lane_u8 simd_set_lane
+# define simd_set_lane_i16 simd_set_lane
+# define simd_set_lane_u16 simd_set_lane
+# define simd_set_lane_i32 simd_set_lane
+# define simd_set_lane_u32 simd_set_lane
+# define simd_set_lane_f32 simd_set_lane
 #else
 # define __simd_lane_check(__vec, __idx)                                       \
 	 __builtin_aarch64_im_lane_boundsi(                                    \
@@ -232,88 +218,80 @@ _simdapi simd_f32 simd_f32_n(float v0, float v1, float v2, float v3) {
 	  __simd_lane_check(__vec, __index);                                   \
 	  __vec[__index];                                                      \
 	 })
-# define __simd_set_lane_any(__elem, __vec, __index)                           \
+# define __simd_set_lane_any(__val, __simd, __lane)                            \
 	 __extension__({                                                       \
-	  __simd_lane_check(__vec, __index);                                   \
-	  __vec[__index] = __elem;                                             \
-	  __vec;                                                               \
+	  __simd_lane_check(__simd, __lane);                                   \
+	  __simd[__lane] = __val;                                              \
+	  __simd;                                                              \
 	 })
-# define simd_i8_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_u8_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_i16_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_u16_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_i32_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_u32_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_f32_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
-# define simd_get_lane(_simd, _lane) __simd_get_lane_any(_simd, _lane)
+# define simd_get_lane_i8 __simd_get_lane_any
+# define simd_get_lane_u8 __simd_get_lane_any
+# define simd_get_lane_i16 __simd_get_lane_any
+# define simd_get_lane_u16 __simd_get_lane_any
+# define simd_get_lane_i32 __simd_get_lane_any
+# define simd_get_lane_u32 __simd_get_lane_any
+# define simd_get_lane_f32 __simd_get_lane_any
+# define simd_get_lane __simd_get_lane_any
 
-# define simd_i8_set_lane(_val, _simd, _lane)                                  \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_u8_set_lane(_val, _simd, _lane)                                  \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_i16_set_lane(_val, _simd, _lane)                                 \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_u16_set_lane(_val, _simd, _lane)                                 \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_i32_set_lane(_val, _simd, _lane)                                 \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_u32_set_lane(_val, _simd, _lane)                                 \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_f32_set_lane(_val, _simd, _lane)                                 \
-	 __simd_set_lane_any(_val, _simd, _lane)
-# define simd_set_lane(_val, _simd, _lane)                                     \
-	 __simd_set_lane_any(_val, _simd, _lane)
+# define simd_set_lane_i8 __simd_set_lane_any
+# define simd_set_lane_u8 __simd_set_lane_any
+# define simd_set_lane_i16 __simd_set_lane_any
+# define simd_set_lane_u16 __simd_set_lane_any
+# define simd_set_lane_i32 __simd_set_lane_any
+# define simd_set_lane_u32 __simd_set_lane_any
+# define simd_set_lane_f32 __simd_set_lane_any
+# define simd_set_lane __simd_set_lane_any
 #endif
 
 // Casts
 _simdapi simd_i8  simd_i8_cvt_i8(simd_i8 val) { return val; }
-_simdapi simd_u8  simd_i8_cvt_u8(simd_i8 val) { return (simd_u8)val; }
+_simdapi simd_u8  simd_u8_cvt_i8(simd_i8 val) { return (simd_u8)val; }
 _simdapi simd_i16 simd_i16_cvt_i16(simd_i16 val) { return val; }
-_simdapi simd_u16 simd_i16_cvt_u16(simd_i16 val) { return (simd_u16)val; }
+_simdapi simd_u16 simd_u16_cvt_i16(simd_i16 val) { return (simd_u16)val; }
 _simdapi simd_i32 simd_i32_cvt_i32(simd_i32 val) { return val; }
-_simdapi simd_u32 simd_i32_cvt_u32(simd_i32 val) { return (simd_u32)val; }
-_simdapi simd_i8  simd_u8_cvt_i8(simd_u8 val) { return (simd_i8)val; }
+_simdapi simd_u32 simd_u32_cvt_i32(simd_i32 val) { return (simd_u32)val; }
+_simdapi simd_i8  simd_i8_cvt_u8(simd_u8 val) { return (simd_i8)val; }
 _simdapi simd_u8  simd_u8_cvt_u8(simd_u8 val) { return val; }
-_simdapi simd_i16 simd_u16_cvt_i16(simd_u16 val) { return (simd_i16)val; }
+_simdapi simd_i16 simd_i16_cvt_u16(simd_u16 val) { return (simd_i16)val; }
 _simdapi simd_u16 simd_u16_cvt_u16(simd_u16 val) { return val; }
-_simdapi simd_i32 simd_u32_cvt_i32(simd_u32 val) { return (simd_i32)val; }
+_simdapi simd_i32 simd_i32_cvt_u32(simd_u32 val) { return (simd_i32)val; }
 _simdapi simd_u32 simd_u32_cvt_u32(simd_u32 val) { return val; }
 _simdapi simd_f32 simd_f32_cvt_f32(simd_f32 val) { return val; }
 
 #if __clang__
-_simdapi simd_i32 simd_f32_cvt_i32(simd_f32 val) {
+_simdapi simd_i32 simd_i32_cvt_f32(simd_f32 val) {
 	return __builtin_neon_vcvtq_s32_v((simd_i8)val, 34);
 }
-_simdapi simd_u32 simd_f32_cvt_u32(simd_f32 val) {
+_simdapi simd_u32 simd_u32_cvt_f32(simd_f32 val) {
 	return __builtin_neon_vcvtq_u32_v((simd_i8)val, 50);
 }
-_simdapi simd_f32 simd_i32_cvt_f32(simd_i32 val) {
+_simdapi simd_f32 simd_f32_cvt_i32(simd_i32 val) {
 	return __builtin_neon_vcvtq_f32_v((simd_i8)val, 34);
 }
-_simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
+_simdapi simd_f32 simd_f32_cvt_u32(simd_u32 val) {
 	return __builtin_neon_vcvtq_f32_v((simd_i8)val, 50);
 }
 #else
-_simdapi simd_i32 simd_f32_cvt_i32(simd_f32 val) {
+_simdapi simd_i32 simd_i32_cvt_f32(simd_f32 val) {
 	return __builtin_aarch64_lbtruncv4sfv4si(val);
 }
-_simdapi simd_u32 simd_f32_cvt_u32(simd_f32 val) {
+_simdapi simd_u32 simd_u32_cvt_f32(simd_f32 val) {
 	return __builtin_aarch64_lbtruncuv4sfv4si_us(val);
 }
-_simdapi simd_f32 simd_i32_cvt_f32(simd_i32 val) {
+_simdapi simd_f32 simd_f32_cvt_i32(simd_i32 val) {
 	return __builtin_aarch64_floatv4siv4sf(val);
 }
-_simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
+_simdapi simd_f32 simd_f32_cvt_u32(simd_u32 val) {
 	return __builtin_aarch64_floatunsv4siv4sf((simd_i32)val);
 }
 #endif // __clang__ else __GNUC__
-#define simd_cvt(_simd, _toty)                                                 \
+#define simd_cvt(_toty, _simd)                                                 \
 	(_Generic(                                                             \
 		_simd,                                                         \
 		 simd_i8: _Generic(                                            \
 			 (_toty){},                                            \
 			 simd_i8: simd_i8_cvt_i8,                              \
-			 simd_u8: simd_i8_cvt_u8,                              \
+			 simd_u8: simd_u8_cvt_i8,                              \
 			 simd_i16: NULL,                                       \
 			 simd_u16: NULL,                                       \
 			 simd_i32: NULL,                                       \
@@ -321,7 +299,7 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 			 simd_f32: NULL),                                      \
 		 simd_u8: _Generic(                                            \
 			 (_toty){},                                            \
-			 simd_i8: simd_u8_cvt_i8,                              \
+			 simd_i8: simd_i8_cvt_u8,                              \
 			 simd_u8: simd_u8_cvt_u8,                              \
 			 simd_i16: NULL,                                       \
 			 simd_u16: NULL,                                       \
@@ -333,7 +311,7 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 			 simd_i8: NULL,                                        \
 			 simd_u8: NULL,                                        \
 			 simd_i16: simd_i16_cvt_i16,                           \
-			 simd_u16: simd_i16_cvt_u16,                           \
+			 simd_u16: simd_u16_cvt_i16,                           \
 			 simd_i32: NULL,                                       \
 			 simd_u32: NULL,                                       \
 			 simd_f32: NULL),                                      \
@@ -341,7 +319,7 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 			 (_toty){},                                            \
 			 simd_i8: NULL,                                        \
 			 simd_u8: NULL,                                        \
-			 simd_i16: simd_u16_cvt_i16,                           \
+			 simd_i16: simd_i16_cvt_u16,                           \
 			 simd_u16: simd_u16_cvt_u16,                           \
 			 simd_i32: NULL,                                       \
 			 simd_u32: NULL,                                       \
@@ -353,29 +331,29 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 			 simd_i16: NULL,                                       \
 			 simd_u16: NULL,                                       \
 			 simd_i32: simd_i32_cvt_i32,                           \
-			 simd_u32: simd_i32_cvt_u32,                           \
-			 simd_f32: simd_i32_cvt_f32),                          \
+			 simd_u32: simd_u32_cvt_i32,                           \
+			 simd_f32: simd_f32_cvt_i32),                          \
 		 simd_u32: _Generic(                                           \
 			 (_toty){},                                            \
 			 simd_i8: NULL,                                        \
 			 simd_u8: NULL,                                        \
 			 simd_i16: NULL,                                       \
 			 simd_u16: NULL,                                       \
-			 simd_i32: simd_u32_cvt_i32,                           \
+			 simd_i32: simd_i32_cvt_u32,                           \
 			 simd_u32: simd_u32_cvt_u32,                           \
-			 simd_f32: simd_u32_cvt_f32),                          \
+			 simd_f32: simd_f32_cvt_u32),                          \
 		 simd_f32: _Generic(                                           \
 			 (_toty){},                                            \
 			 simd_i8: NULL,                                        \
 			 simd_u8: NULL,                                        \
 			 simd_i16: NULL,                                       \
 			 simd_u16: NULL,                                       \
-			 simd_i32: simd_f32_cvt_i32,                           \
-			 simd_u32: simd_f32_cvt_u32,                           \
+			 simd_i32: simd_i32_cvt_f32,                           \
+			 simd_u32: simd_u32_cvt_f32,                           \
 			 simd_f32: simd_f32_cvt_f32))(_simd))
 
 // Reinterpret Cast
-#define simd_reinterpret(_simd, _toty) ((_toty)(_simd))
+#define simd_reinterpret(_toty, _simd) ((_toty)(_simd))
 
 // Reverse bits in each byte
 #if __clang__
@@ -414,48 +392,48 @@ _simdapi simd_f32 simd_u32_cvt_f32(simd_u32 val) {
 #endif
 
 // Reverse vector elements
-_simdapi simd_i8 simd_i8_rev(simd_i8 val) {
+_simdapi simd_i8 simd_rev_i8(simd_i8 val) {
 	return _simd_shuffle(
 		val, val, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
 }
-_simdapi simd_u8 simd_u8_rev(simd_u8 val) {
+_simdapi simd_u8 simd_rev_u8(simd_u8 val) {
 	return _simd_shuffle(
 		val, val, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
 }
-_simdapi simd_i16 simd_i16_rev(simd_i16 val) {
+_simdapi simd_i16 simd_rev_i16(simd_i16 val) {
 	return _simd_shuffle(val, val, 7, 6, 5, 4, 3, 2, 1, 0);
 }
-_simdapi simd_u16 simd_u16_rev(simd_u16 val) {
+_simdapi simd_u16 simd_rev_u16(simd_u16 val) {
 	return _simd_shuffle(val, val, 7, 6, 5, 4, 3, 2, 1, 0);
 }
-_simdapi simd_i32 simd_i32_rev(simd_i32 val) {
+_simdapi simd_i32 simd_rev_i32(simd_i32 val) {
 	return _simd_shuffle(val, val, 3, 2, 1, 0);
 }
-_simdapi simd_u32 simd_u32_rev(simd_u32 val) {
+_simdapi simd_u32 simd_rev_u32(simd_u32 val) {
 	return _simd_shuffle(val, val, 3, 2, 1, 0);
 }
-_simdapi simd_f32 simd_f32_rev(simd_f32 val) {
+_simdapi simd_f32 simd_rev_f32(simd_f32 val) {
 	return _simd_shuffle(val, val, 3, 2, 1, 0);
 }
 #define simd_rev(_simd)                                                        \
 	(_Generic(                                                             \
 		_simd,                                                         \
-		 simd_i8: simd_i8_rev,                                         \
-		 simd_u8: simd_u8_rev,                                         \
-		 simd_i16: simd_i16_rev,                                       \
-		 simd_u16: simd_u16_rev,                                       \
-		 simd_i32: simd_i32_rev,                                       \
-		 simd_u32: simd_u32_rev,                                       \
-		 simd_f32: simd_f32_rev)(_simd))
+		 simd_i8: simd_rev_i8,                                         \
+		 simd_u8: simd_rev_u8,                                         \
+		 simd_i16: simd_rev_i16,                                       \
+		 simd_u16: simd_rev_u16,                                       \
+		 simd_i32: simd_rev_i32,                                       \
+		 simd_u32: simd_rev_u32,                                       \
+		 simd_f32: simd_rev_f32)(_simd))
 
 // Shuffle
-#define simd_i8_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_u8_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_i16_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_u16_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_i32_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_u32_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
-#define simd_f32_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_i8(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_u8(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_i16(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_u16(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_i32(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_u32(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
+#define simd_shuffle_f32(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
 #define simd_shuffle(_simd, ...) _simd_shuffle(_simd, _simd, __VA_ARGS__)
 
 // Shift vector elements left
@@ -476,51 +454,51 @@ _simdapi simd_f32 simd_f32_rev(simd_f32 val) {
 				    simd_i32: 50,                              \
 				    simd_u32: 50,                              \
 				    simd_f32: 50))))
-# define simd_i8_shl_lane simd_shl_lane
-# define simd_u8_shl_lane simd_shl_lane
-# define simd_i16_shl_lane simd_shl_lane
-# define simd_u16_shl_lane simd_shl_lane
-# define simd_i32_shl_lane simd_shl_lane
-# define simd_u32_shl_lane simd_shl_lane
-# define simd_f32_shl_lane simd_shl_lane
+# define simd_shl_lane_i8 simd_shl_lane
+# define simd_shl_lane_u8 simd_shl_lane
+# define simd_shl_lane_i16 simd_shl_lane
+# define simd_shl_lane_u16 simd_shl_lane
+# define simd_shl_lane_i32 simd_shl_lane
+# define simd_shl_lane_u32 simd_shl_lane
+# define simd_shl_lane_f32 simd_shl_lane
 #else
-_simdapi simd_i8 simd_i8_shl_lane(simd_i8 val, const int lanes) {
+_simdapi simd_i8 simd_shl_lane_i8(simd_i8 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_i8(0), val, bias, bias + 1, bias + 2, bias + 3, bias + 4,
 		bias + 5, bias + 6, bias + 7, bias + 8, bias + 9, bias + 10,
 		bias + 11, bias + 12, bias + 13, bias + 14, bias + 15);
 }
-_simdapi simd_u8 simd_u8_shl_lane(simd_u8 val, const int lanes) {
+_simdapi simd_u8 simd_shl_lane_u8(simd_u8 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_u8(0), val, bias, bias + 1, bias + 2, bias + 3, bias + 4,
 		bias + 5, bias + 6, bias + 7, bias + 8, bias + 9, bias + 10,
 		bias + 11, bias + 12, bias + 13, bias + 14, bias + 15);
 }
-_simdapi simd_i16 simd_i16_shl_lane(simd_i16 val, const int lanes) {
+_simdapi simd_i16 simd_shl_lane_i16(simd_i16 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_i16(0), val, bias, bias + 1, bias + 2, bias + 3, bias + 4,
 		bias + 5, bias + 6, bias + 7);
 }
-_simdapi simd_u16 simd_u16_shl_lane(simd_u16 val, const int lanes) {
+_simdapi simd_u16 simd_shl_lane_u16(simd_u16 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_u16(0), val, bias, bias + 1, bias + 2, bias + 3, bias + 4,
 		bias + 5, bias + 6, bias + 7);
 }
-_simdapi simd_i32 simd_i32_shl_lane(simd_i32 val, const int lanes) {
+_simdapi simd_i32 simd_shl_lane_i32(simd_i32 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_i32(0), val, bias, bias + 1, bias + 2, bias + 3);
 }
-_simdapi simd_u32 simd_u32_shl_lane(simd_u32 val, const int lanes) {
+_simdapi simd_u32 simd_shl_lane_u32(simd_u32 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_u32(0), val, bias, bias + 1, bias + 2, bias + 3);
 }
-_simdapi simd_f32 simd_f32_shl_lane(simd_f32 val, const int lanes) {
+_simdapi simd_f32 simd_shl_lane_f32(simd_f32 val, const int lanes) {
 	const int bias = 4 - lanes;
 	return _simd_shuffle(
 		simd_f32(0), val, bias, bias + 1, bias + 2, bias + 3);
@@ -528,13 +506,13 @@ _simdapi simd_f32 simd_f32_shl_lane(simd_f32 val, const int lanes) {
 # define simd_shl_lane(_simd, _lanes)                                          \
 	 (_Generic(                                                            \
 		 _simd,                                                        \
-		  simd_i8: simd_i8_shl_lane,                                   \
-		  simd_u8: simd_u8_shl_lane,                                   \
-		  simd_i16: simd_i16_shl_lane,                                 \
-		  simd_u16: simd_u16_shl_lane,                                 \
-		  simd_i32: simd_i32_shl_lane,                                 \
-		  simd_u32: simd_u32_shl_lane,                                 \
-		  simd_f32: simd_f32_shl_lane)(_simd, _lanes))
+		  simd_i8: simd_shl_lane_i8,                                   \
+		  simd_u8: simd_shl_lane_u8,                                   \
+		  simd_i16: simd_shl_lane_i16,                                 \
+		  simd_u16: simd_shl_lane_u16,                                 \
+		  simd_i32: simd_shl_lane_i32,                                 \
+		  simd_u32: simd_shl_lane_u32,                                 \
+		  simd_f32: simd_shl_lane_f32)(_simd, _lanes))
 #endif
 
 // Shift vector elements right
@@ -555,168 +533,247 @@ _simdapi simd_f32 simd_f32_shl_lane(simd_f32 val, const int lanes) {
 				    simd_i32: 50,                              \
 				    simd_u32: 50,                              \
 				    simd_f32: 50))))
-# define simd_i8_shr_lane simd_shr_lane
-# define simd_u8_shr_lane simd_shr_lane
-# define simd_i16_shr_lane simd_shr_lane
-# define simd_u16_shr_lane simd_shr_lane
-# define simd_i32_shr_lane simd_shr_lane
-# define simd_u32_shr_lane simd_shr_lane
-# define simd_f32_shr_lane simd_shr_lane
+# define simd_shr_lane_i8 simd_shr_lane
+# define simd_shr_lane_u8 simd_shr_lane
+# define simd_shr_lane_i16 simd_shr_lane
+# define simd_shr_lane_u16 simd_shr_lane
+# define simd_shr_lane_i32 simd_shr_lane
+# define simd_shr_lane_u32 simd_shr_lane
+# define simd_shr_lane_f32 simd_shr_lane
 #else
-_simdapi simd_i8 simd_i8_shr_lane(simd_i8 val, const int lanes) {
+_simdapi simd_i8 simd_shr_lane_i8(simd_i8 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_i8(0), lanes, lanes + 1, lanes + 2, lanes + 3,
 		lanes + 4, lanes + 5, lanes + 6, lanes + 7, lanes + 8,
 		lanes + 9, lanes + 10, lanes + 11, lanes + 12, lanes + 13,
 		lanes + 14, lanes + 15);
 }
-_simdapi simd_u8 simd_u8_shr_lane(simd_u8 val, const int lanes) {
+_simdapi simd_u8 simd_shr_lane_u8(simd_u8 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_u8(0), lanes, lanes + 1, lanes + 2, lanes + 3,
 		lanes + 4, lanes + 5, lanes + 6, lanes + 7, lanes + 8,
 		lanes + 9, lanes + 10, lanes + 11, lanes + 12, lanes + 13,
 		lanes + 14, lanes + 15);
 }
-_simdapi simd_i16 simd_i16_shr_lane(simd_i16 val, const int lanes) {
+_simdapi simd_i16 simd_shr_lane_i16(simd_i16 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_i16(0), lanes, lanes + 1, lanes + 2, lanes + 3,
 		lanes + 4, lanes + 5, lanes + 6, lanes + 7);
 }
-_simdapi simd_u16 simd_u16_shr_lane(simd_u16 val, const int lanes) {
+_simdapi simd_u16 simd_shr_lane_u16(simd_u16 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_u16(0), lanes, lanes + 1, lanes + 2, lanes + 3,
 		lanes + 4, lanes + 5, lanes + 6, lanes + 7);
 }
-_simdapi simd_i32 simd_i32_shr_lane(simd_i32 val, const int lanes) {
+_simdapi simd_i32 simd_shr_lane_i32(simd_i32 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_i32(0), lanes, lanes + 1, lanes + 2, lanes + 3);
 }
-_simdapi simd_u32 simd_u32_shr_lane(simd_u32 val, const int lanes) {
+_simdapi simd_u32 simd_shr_lane_u32(simd_u32 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_u32(0), lanes, lanes + 1, lanes + 2, lanes + 3);
 }
-_simdapi simd_f32 simd_f32_shr_lane(simd_f32 val, const int lanes) {
+_simdapi simd_f32 simd_shr_lane_f32(simd_f32 val, const int lanes) {
 	return _simd_shuffle(
 		val, simd_f32(0), lanes, lanes + 1, lanes + 2, lanes + 3);
 }
 # define simd_shr_lane(_simd, _lanes)                                          \
 	 (_Generic(                                                            \
 		 _simd,                                                        \
-		  simd_i8: simd_i8_shr_lane,                                   \
-		  simd_u8: simd_u8_shr_lane,                                   \
-		  simd_i16: simd_i16_shr_lane,                                 \
-		  simd_u16: simd_u16_shr_lane,                                 \
-		  simd_i32: simd_i32_shr_lane,                                 \
-		  simd_u32: simd_u32_shr_lane,                                 \
-		  simd_f32: simd_f32_shr_lane)(_simd, _lanes))
+		  simd_i8: simd_shr_lane_i8,                                   \
+		  simd_u8: simd_shr_lane_u8,                                   \
+		  simd_i16: simd_shr_lane_i16,                                 \
+		  simd_u16: simd_shr_lane_u16,                                 \
+		  simd_i32: simd_shr_lane_i32,                                 \
+		  simd_u32: simd_shr_lane_u32,                                 \
+		  simd_f32: simd_shr_lane_f32)(_simd, _lanes))
 #endif
 
 // Load
 #if __clang__
-_simdapi simd_i8 simd_i8_ld(const void *ptr) {
+_simdapi simd_i8 simd_ld_i8(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 32);
 }
-_simdapi simd_u8 simd_u8_ld(const void *ptr) {
+_simdapi simd_u8 simd_ld_u8(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 48);
 }
-_simdapi simd_i16 simd_i16_ld(const void *ptr) {
+_simdapi simd_i16 simd_ld_i16(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 33);
 }
-_simdapi simd_u16 simd_u16_ld(const void *ptr) {
+_simdapi simd_u16 simd_ld_u16(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 49);
 }
-_simdapi simd_i32 simd_i32_ld(const void *ptr) {
+_simdapi simd_i32 simd_ld_i32(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 34);
 }
-_simdapi simd_u32 simd_u32_ld(const void *ptr) {
+_simdapi simd_u32 simd_ld_u32(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 50);
 }
-_simdapi simd_f32 simd_f32_ld(const void *ptr) {
+_simdapi simd_f32 simd_ld_f32(const void *ptr) {
 	return __builtin_neon_vld1q_v(ptr, 41);
 }
 #else
-_simdapi simd_i8 simd_i8_ld(const void *ptr) {
+_simdapi simd_i8 simd_ld_i8(const void *ptr) {
 	return __builtin_aarch64_ld1v16qi(ptr);
 }
-_simdapi simd_u8 simd_u8_ld(const void *ptr) {
+_simdapi simd_u8 simd_ld_u8(const void *ptr) {
 	return __builtin_aarch64_ld1v16qi_us(ptr);
 }
-_simdapi simd_i16 simd_i16_ld(const void *ptr) {
+_simdapi simd_i16 simd_ld_i16(const void *ptr) {
 	return __builtin_aarch64_ld1v8hi(ptr);
 }
-_simdapi simd_u16 simd_u16_ld(const void *ptr) {
+_simdapi simd_u16 simd_ld_u16(const void *ptr) {
 	return __builtin_aarch64_ld1v8hi_us(ptr);
 }
-_simdapi simd_i32 simd_i32_ld(const void *ptr) {
+_simdapi simd_i32 simd_ld_i32(const void *ptr) {
 	return __builtin_aarch64_ld1v4si(ptr);
 }
-_simdapi simd_u32 simd_u32_ld(const void *ptr) {
+_simdapi simd_u32 simd_ld_u32(const void *ptr) {
 	return __builtin_aarch64_ld1v4si_us(ptr);
 }
-_simdapi simd_f32 simd_f32_ld(const void *ptr) {
+_simdapi simd_f32 simd_ld_f32(const void *ptr) {
 	return __builtin_aarch64_ld1v4sf(ptr);
 }
 #endif
 
 // Store
 #if __clang__
-_simdapi void simd_i8_st(void *to, simd_i8 val) {
+_simdapi void simd_st_i8(void *to, simd_i8 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 32);
 }
-_simdapi void simd_u8_st(void *to, simd_u8 val) {
+_simdapi void simd_st_u8(void *to, simd_u8 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 48);
 }
-_simdapi void simd_i16_st(void *to, simd_i16 val) {
+_simdapi void simd_st_i16(void *to, simd_i16 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 33);
 }
-_simdapi void simd_u16_st(void *to, simd_u16 val) {
+_simdapi void simd_st_u16(void *to, simd_u16 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 49);
 }
-_simdapi void simd_i32_st(void *to, simd_i32 val) {
+_simdapi void simd_st_i32(void *to, simd_i32 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 34);
 }
-_simdapi void simd_u32_st(void *to, simd_u32 val) {
+_simdapi void simd_st_u32(void *to, simd_u32 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 50);
 }
-_simdapi void simd_f32_st(void *to, simd_f32 val) {
+_simdapi void simd_st_f32(void *to, simd_f32 val) {
 	__builtin_neon_vst1q_v(to, (simd_i8)val, 41);
 }
 #else
-_simdapi void simd_i8_st(void *to, simd_i8 val) {
+_simdapi void simd_st_i8(void *to, simd_i8 val) {
 	__builtin_aarch64_st1v16qi(to, val);
 }
-_simdapi void simd_u8_st(void *to, simd_u8 val) {
+_simdapi void simd_st_u8(void *to, simd_u8 val) {
 	__builtin_aarch64_st1v16qi_su(to, val);
 }
-_simdapi void simd_i16_st(void *to, simd_i16 val) {
+_simdapi void simd_st_i16(void *to, simd_i16 val) {
 	__builtin_aarch64_st1v8hi(to, val);
 }
-_simdapi void simd_u16_st(void *to, simd_u16 val) {
+_simdapi void simd_st_u16(void *to, simd_u16 val) {
 	__builtin_aarch64_st1v8hi_su(to, val);
 }
-_simdapi void simd_i32_st(void *to, simd_i32 val) {
+_simdapi void simd_st_i32(void *to, simd_i32 val) {
 	__builtin_aarch64_st1v4si(to, val);
 }
-_simdapi void simd_u32_st(void *to, simd_u32 val) {
+_simdapi void simd_st_u32(void *to, simd_u32 val) {
 	__builtin_aarch64_st1v4si_su(to, val);
 }
-_simdapi void simd_f32_st(void *to, simd_f32 val) {
+_simdapi void simd_st_f32(void *to, simd_f32 val) {
 	__builtin_aarch64_st1v4sf(to, val);
 }
 #endif
 #define simd_st(_to, _simd)                                                    \
 	(_Generic(                                                             \
 		_simd,                                                         \
-		 simd_i8: simd_i8_st,                                          \
-		 simd_u8: simd_u8_st,                                          \
-		 simd_i16: simd_i16_st,                                        \
-		 simd_u16: simd_u16_st,                                        \
-		 simd_i32: simd_i32_st,                                        \
-		 simd_u32: simd_u32_st,                                        \
-		 simd_f32: simd_f32_st)(_to, _simd))
+		 simd_i8: simd_st_i8,                                          \
+		 simd_u8: simd_st_u8,                                          \
+		 simd_i16: simd_st_i16,                                        \
+		 simd_u16: simd_st_u16,                                        \
+		 simd_i32: simd_st_i32,                                        \
+		 simd_u32: simd_st_u32,                                        \
+		 simd_f32: simd_st_f32)(_to, _simd))
 
 // Widen
+#if __clang__
+_simdapi simd_i16 simd_widen_lo_i8(simd_i8 val) {
+	return (simd_i16)__builtin_neon_vmovl_v(
+		_simd_shuffle(val, val, 0, 1, 2, 3, 4, 5, 6, 7), 33);
+}
+_simdapi simd_i16 simd_widen_hi_i8(simd_i8 val) {
+	return (simd_i16)__builtin_neon_vshll_n_v(
+		_simd_shuffle(val, val, 8, 9, 10, 11, 12, 13, 14, 15), 0, 33);
+}
+_simdapi simd_u16 simd_widen_lo_u8(simd_u8 val) {
+	return (simd_i16)__builtin_neon_vmovl_v(
+		_simd_shuffle(val, val, 0, 1, 2, 3, 4, 5, 6, 7), 49);
+}
+_simdapi simd_u16 simd_widen_hi_u8(simd_u8 val) {
+	return (simd_i16)__builtin_neon_vshll_n_v(
+		_simd_shuffle(val, val, 8, 9, 10, 11, 12, 13, 14, 15), 0, 49);
+}
+_simdapi simd_i16 simd_widen_lo_i16(simd_i16 val) {
+	return (simd_i16)__builtin_neon_vmovl_v(
+		_simd_shuffle(val, val, 0, 1, 2, 3), 34);
+}
+_simdapi simd_i16 simd_widen_hi_i16(simd_i16 val) {
+	return (simd_i16)__builtin_neon_vshll_n_v(
+		_simd_shuffle(val, val, 4, 5, 6, 7), 0, 34);
+}
+_simdapi simd_u16 simd_widen_lo_u16(simd_u16 val) {
+	return (simd_i16)__builtin_neon_vmovl_v(
+		_simd_shuffle(val, val, 0, 1, 2, 3), 50);
+}
+_simdapi simd_u16 simd_widen_hi_u16(simd_u16 val) {
+	return (simd_i16)__builtin_neon_vshll_n_v(
+		_simd_shuffle(val, val, 4, 5, 6, 7), 0, 50);
+}
+#else
+_simdapi simd_i16 simd_widen_lo_i8(simd_i8 val) {
+	return __builtin_aarch64_sxtlv8hi(__builtin_aarch64_get_lowv16qi(val));
+}
+_simdapi simd_i16 simd_widen_hi_i8(simd_i8 val) {
+	return __builtin_aarch64_vec_unpacks_hi_v16qi(val);
+}
+_simdapi simd_u16 simd_widen_lo_u8(simd_u8 val) {
+	return __builtin_aarch64_uxtlv8hi_uu(
+		(__Uint8x8_t)__builtin_aarch64_get_lowv16qi((simd_i8)val));
+}
+_simdapi simd_u16 simd_widen_hi_u8(simd_u8 val) {
+	return __builtin_aarch64_vec_unpacku_hi_v16qi_uu(val);
+}
+_simdapi simd_i32 simd_widen_lo_i16(simd_i16 val) {
+	return __builtin_aarch64_sxtlv4si(__builtin_aarch64_get_lowv8hi(val));
+}
+_simdapi simd_i32 simd_widen_hi_i16(simd_i16 val) {
+	return __builtin_aarch64_vec_unpacks_hi_v8hi(val);
+}
+_simdapi simd_u32 simd_widen_lo_u16(simd_u16 val) {
+	return __builtin_aarch64_uxtlv4si_uu(
+		(__Uint16x4_t)__builtin_aarch64_get_lowv8hi((simd_i16)val));
+}
+_simdapi simd_u32 simd_widen_hi_u16(simd_u16 val) {
+	return __builtin_aarch64_vec_unpacku_hi_v8hi_uu(val);
+}
+#endif
+#define simd_widen_lo(_simd)                                                   \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_widen_lo_i8,                                    \
+		 simd_u8: simd_widen_lo_u8,                                    \
+		 simd_i16: simd_widen_lo_i16,                                  \
+		 simd_u16: simd_widen_lo_u16)(_simd))
+#define simd_widen_hi(_simd)                                                   \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_widen_hi_i8,                                    \
+		 simd_u8: simd_widen_hi_u8,                                    \
+		 simd_i16: simd_widen_hi_i16,                                  \
+		 simd_u16: simd_widen_hi_u16)(_simd))
+
 // Narrow
+#if __clang__
+#else
+#endif
 
 // Addition
 // Subtract

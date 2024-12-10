@@ -2,9 +2,9 @@
 #include "simd_common.h"
 
 test(init_i8) {
-	simd_i8 one_typed = simd_i8_dup_n(0);
+	simd_i8 one_typed = simd_dup_n_i8(0);
 	simd_i8 all_typed =
-		simd_i8_n(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+		simd_n_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 	simd_i8 one = simd_i8(0);
 	simd_i8 all =
 		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
@@ -12,9 +12,9 @@ test(init_i8) {
 }
 
 test(init_u8) {
-	simd_u8 one_typed = simd_u8_dup_n(0);
+	simd_u8 one_typed = simd_dup_n_u8(0);
 	simd_u8 all_typed =
-		simd_u8_n(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+		simd_n_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 	simd_u8 one = simd_u8(0);
 	simd_u8 all =
 		simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
@@ -22,47 +22,47 @@ test(init_u8) {
 }
 
 test(init_i16) {
-	simd_i16 one_typed = simd_i16_dup_n(0);
-	simd_i16 all_typed = simd_i16_n(0, 1, 2, 3, 4, 5, 6, 7);
+	simd_i16 one_typed = simd_dup_n_i16(0);
+	simd_i16 all_typed = simd_n_i16(0, 1, 2, 3, 4, 5, 6, 7);
 	simd_i16 one = simd_i16(0);
 	simd_i16 all = simd_i16(0, 1, 2, 3, 4, 5, 6, 7);
 	pass;
 }
 
 test(init_u16) {
-	simd_u16 one_typed = simd_u16_dup_n(0);
-	simd_u16 all_typed = simd_u16_n(0, 1, 2, 3, 4, 5, 6, 7);
+	simd_u16 one_typed = simd_dup_n_u16(0);
+	simd_u16 all_typed = simd_n_u16(0, 1, 2, 3, 4, 5, 6, 7);
 	simd_u16 one = simd_u16(0);
 	simd_u16 all = simd_u16(0, 1, 2, 3, 4, 5, 6, 7);
 	pass;
 }
 
 test(init_i32) {
-	simd_i32 one_typed = simd_i32_dup_n(0);
-	simd_i32 all_typed = simd_i32_n(0, 1, 2, 3);
+	simd_i32 one_typed = simd_dup_n_i32(0);
+	simd_i32 all_typed = simd_n_i32(0, 1, 2, 3);
 	simd_i32 one = simd_i32(0);
 	simd_i32 all = simd_i32(0, 1, 2, 3);
 	pass;
 }
 
 test(init_u32) {
-	simd_u32 one_typed = simd_u32_dup_n(0);
-	simd_u32 all_typed = simd_u32_n(0, 1, 2, 3);
+	simd_u32 one_typed = simd_dup_n_u32(0);
+	simd_u32 all_typed = simd_n_u32(0, 1, 2, 3);
 	simd_u32 one = simd_u32(0);
 	simd_u32 all = simd_u32(0, 1, 2, 3);
 	pass;
 }
 
 test(init_f32) {
-	simd_f32 one_typed = simd_f32_dup_n(0);
-	simd_f32 all_typed = simd_f32_n(0, 1, 2, 3);
+	simd_f32 one_typed = simd_dup_n_f32(0);
+	simd_f32 all_typed = simd_n_f32(0, 1, 2, 3);
 	simd_f32 one = simd_f32(0);
 	simd_f32 all = simd_f32(0, 1, 2, 3);
 	pass;
 }
 
 test(get_lane_i8) {
-	assert(simd_i8_get_lane(
+	assert(simd_get_lane_i8(
 		       simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
 			       15),
 		       8)
@@ -76,7 +76,7 @@ test(get_lane_i8) {
 }
 
 test(get_lane_u8) {
-	assert(simd_u8_get_lane(
+	assert(simd_get_lane_u8(
 		       simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
 			       15),
 		       8)
@@ -90,31 +90,31 @@ test(get_lane_u8) {
 }
 
 test(get_lane_i16) {
-	assert(simd_i16_get_lane(simd_i16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
+	assert(simd_get_lane_i16(simd_i16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
 	assert(simd_get_lane(simd_i16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
 	pass;
 }
 
 test(get_lane_u16) {
-	assert(simd_u16_get_lane(simd_u16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
+	assert(simd_get_lane_u16(simd_u16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
 	assert(simd_get_lane(simd_u16(0, 1, 2, 3, 4, 5, 6, 7), 3) == 3);
 	pass;
 }
 
 test(get_lane_i32) {
-	assert(simd_i32_get_lane(simd_i32(0, 1, 2, 3), 2) == 2);
+	assert(simd_get_lane_i32(simd_i32(0, 1, 2, 3), 2) == 2);
 	assert(simd_get_lane(simd_i32(0, 1, 2, 3), 2) == 2);
 	pass;
 }
 
 test(get_lane_u32) {
-	assert(simd_u32_get_lane(simd_u32(0, 1, 2, 3), 2) == 2);
+	assert(simd_get_lane_u32(simd_u32(0, 1, 2, 3), 2) == 2);
 	assert(simd_get_lane(simd_u32(0, 1, 2, 3), 2) == 2);
 	pass;
 }
 
 test(get_lane_f32) {
-	assert(simd_f32_get_lane(simd_f32(0, 1, 2, 3), 2) == 2);
+	assert(simd_get_lane_f32(simd_f32(0, 1, 2, 3), 2) == 2);
 	assert(simd_get_lane(simd_f32(0, 1, 2, 3), 2) == 2);
 	pass;
 }
@@ -122,7 +122,7 @@ test(get_lane_f32) {
 test(set_lane_i8) {
 	simd_i8 x =
 		simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-	x = simd_i8_set_lane(10, x, 1);
+	x = simd_set_lane_i8(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -132,7 +132,7 @@ test(set_lane_i8) {
 test(set_lane_u8) {
 	simd_u8 x =
 		simd_u8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-	x = simd_u8_set_lane(10, x, 1);
+	x = simd_set_lane_u8(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -141,7 +141,7 @@ test(set_lane_u8) {
 
 test(set_lane_i16) {
 	simd_i16 x = simd_i16(0, 1, 2, 3, 4, 5, 6, 7);
-	x = simd_i16_set_lane(10, x, 1);
+	x = simd_set_lane_i16(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -150,7 +150,7 @@ test(set_lane_i16) {
 
 test(set_lane_u16) {
 	simd_u16 x = simd_u16(0, 1, 2, 3, 4, 5, 6, 7);
-	x = simd_u16_set_lane(10, x, 1);
+	x = simd_set_lane_u16(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -159,7 +159,7 @@ test(set_lane_u16) {
 
 test(set_lane_i32) {
 	simd_i32 x = simd_i32(0, 1, 2, 3);
-	x = simd_i32_set_lane(10, x, 1);
+	x = simd_set_lane_i32(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -168,7 +168,7 @@ test(set_lane_i32) {
 
 test(set_lane_u32) {
 	simd_u32 x = simd_u32(0, 1, 2, 3);
-	x = simd_u32_set_lane(10, x, 1);
+	x = simd_set_lane_u32(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
@@ -177,106 +177,106 @@ test(set_lane_u32) {
 
 test(set_lane_f32) {
 	simd_f32 x = simd_f32(0, 1, 2, 3);
-	x = simd_f32_set_lane(10, x, 1);
+	x = simd_set_lane_f32(10, x, 1);
 	x = simd_set_lane(20, x, 2);
 	assert(simd_get_lane(x, 1) == 10);
 	assert(simd_get_lane(x, 2) == 20);
 	pass;
 }
 
-test(i8_cvt_u8) {
+test(u8_cvt_i8) {
 	simd_i8 from = simd_i8(-1);
-	simd_u8 to_typed = simd_i8_cvt_u8(from);
-	simd_u8 to = simd_cvt(from, simd_u8);
+	simd_u8 to_typed = simd_u8_cvt_i8(from);
+	simd_u8 to = simd_cvt(simd_u8, from);
 	assert(simd_get_lane(to_typed, 0) == 255);
 	assert(simd_get_lane(to, 0) == 255);
 	pass;
 }
 
-test(u8_cvt_i8) {
+test(i8_cvt_u8) {
 	simd_u8 from = simd_u8(255);
-	simd_i8 to_typed = simd_u8_cvt_i8(from);
-	simd_i8 to = simd_cvt(from, simd_i8);
+	simd_i8 to_typed = simd_i8_cvt_u8(from);
+	simd_i8 to = simd_cvt(simd_i8, from);
 	assert(simd_get_lane(to_typed, 0) == -1);
 	assert(simd_get_lane(to, 0) == -1);
 	pass;
 }
 
-test(i16_cvt_u16) {
+test(u16_cvt_i16) {
 	simd_i16 from = simd_i16(-1);
-	simd_u16 to_typed = simd_i16_cvt_u16(from);
-	simd_u16 to = simd_cvt(from, simd_u16);
+	simd_u16 to_typed = simd_u16_cvt_i16(from);
+	simd_u16 to = simd_cvt(simd_u16, from);
 	assert(simd_get_lane(to_typed, 0) == 65535);
 	assert(simd_get_lane(to, 0) == 65535);
 	pass;
 }
 
-test(u16_cvt_i16) {
+test(i16_cvt_u16) {
 	simd_u16 from = simd_u16(65535);
-	simd_i16 to_typed = simd_u16_cvt_i16(from);
-	simd_i16 to = simd_cvt(from, simd_i16);
-	assert(simd_get_lane(to_typed, 0) == -1);
-	assert(simd_get_lane(to, 0) == -1);
-	pass;
-}
-
-test(i32_cvt_u32) {
-	simd_i32 from = simd_i32(-1);
-	simd_u32 to_typed = simd_i32_cvt_u32(from);
-	simd_u32 to = simd_cvt(from, simd_u32);
-	assert(simd_get_lane(to_typed, 0) == 4294967295);
-	assert(simd_get_lane(to, 0) == 4294967295);
-	pass;
-}
-
-test(i32_cvt_f32) {
-	simd_i32 from = simd_i32(-1);
-	simd_f32 to_typed = simd_i32_cvt_f32(from);
-	simd_f32 to = simd_cvt(from, simd_f32);
+	simd_i16 to_typed = simd_i16_cvt_u16(from);
+	simd_i16 to = simd_cvt(simd_i16, from);
 	assert(simd_get_lane(to_typed, 0) == -1);
 	assert(simd_get_lane(to, 0) == -1);
 	pass;
 }
 
 test(u32_cvt_i32) {
-	simd_u32 from = simd_u32(4294967295);
-	simd_i32 to_typed = simd_u32_cvt_i32(from);
-	simd_i32 to = simd_cvt(from, simd_i32);
+	simd_i32 from = simd_i32(-1);
+	simd_u32 to_typed = simd_u32_cvt_i32(from);
+	simd_u32 to = simd_cvt(simd_u32, from);
+	assert(simd_get_lane(to_typed, 0) == 4294967295);
+	assert(simd_get_lane(to, 0) == 4294967295);
+	pass;
+}
+
+test(f32_cvt_i32) {
+	simd_i32 from = simd_i32(-1);
+	simd_f32 to_typed = simd_f32_cvt_i32(from);
+	simd_f32 to = simd_cvt(simd_f32, from);
 	assert(simd_get_lane(to_typed, 0) == -1);
 	assert(simd_get_lane(to, 0) == -1);
 	pass;
 }
 
-test(u32_cvt_f32) {
+test(i32_cvt_u32) {
+	simd_u32 from = simd_u32(4294967295);
+	simd_i32 to_typed = simd_i32_cvt_u32(from);
+	simd_i32 to = simd_cvt(simd_i32, from);
+	assert(simd_get_lane(to_typed, 0) == -1);
+	assert(simd_get_lane(to, 0) == -1);
+	pass;
+}
+
+test(f32_cvt_u32) {
 	simd_u32 from = simd_u32(1);
-	simd_f32 to_typed = simd_u32_cvt_f32(from);
-	simd_f32 to = simd_cvt(from, simd_f32);
+	simd_f32 to_typed = simd_f32_cvt_u32(from);
+	simd_f32 to = simd_cvt(simd_f32, from);
 	assert(simd_get_lane(to_typed, 0) == 1);
 	assert(simd_get_lane(to, 0) == 1);
 	pass;
 }
 
-test(f32_cvt_i32) {
+test(i32_cvt_f32) {
 	simd_f32 from = simd_f32(-5.5);
-	simd_i32 to_typed = simd_f32_cvt_i32(from);
-	simd_i32 to = simd_cvt(from, simd_i32);
+	simd_i32 to_typed = simd_i32_cvt_f32(from);
+	simd_i32 to = simd_cvt(simd_i32, from);
 	assert(simd_get_lane(to_typed, 0) == -5);
 	assert(simd_get_lane(to, 0) == -5);
 	pass;
 }
 
-test(f32_cvt_u32) {
+test(u32_cvt_f32) {
 	simd_f32 from = simd_f32(5.5);
-	simd_u32 to_typed = simd_f32_cvt_u32(from);
-	simd_u32 to = simd_cvt(from, simd_u32);
+	simd_u32 to_typed = simd_u32_cvt_f32(from);
+	simd_u32 to = simd_cvt(simd_u32, from);
 	assert(simd_get_lane(to_typed, 0) == 5);
 	assert(simd_get_lane(to, 0) == 5);
 	pass;
 }
 
-test(f32_reinterpret_u32) {
+test(u32_reinterpret_f32) {
 	simd_f32 from = simd_f32(1.0);
-	simd_u32 to = simd_reinterpret(from, simd_u32);
+	simd_u32 to = simd_reinterpret(simd_u32, from);
 	assert(simd_get_lane(to, 0) == 0x3F800000);
 	pass;
 }
@@ -429,7 +429,7 @@ test(shr_lane_u32) {
 }
 
 test(u32_ld) {
-	simd_u32 x = simd_u32_ld((uint32_t[4]){ 1, 3, 3, 7 });
+	simd_u32 x = simd_ld_u32((uint32_t[4]){ 1, 3, 3, 7 });
 	assert(simd_get_lane(x, 0) == 1);
 	assert(simd_get_lane(x, 1) == 3);
 	assert(simd_get_lane(x, 2) == 3);
@@ -444,6 +444,30 @@ test(u32_st) {
 	assert(arr[1] == 1);
 	assert(arr[2] == 2);
 	assert(arr[3] == 3);
+	pass;
+}
+
+test(i8_widen_lo) {
+	simd_i16 x = simd_widen_lo(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	assert(simd_get_lane(x, 0) == 0);
+	pass;
+}
+
+test(i8_widen_hi) {
+	simd_i16 x = simd_widen_hi(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
+	assert(simd_get_lane(x, 0) == 8);
+	pass;
+}
+
+test(i16_widen_lo) {
+	simd_i32 x = simd_widen_lo(simd_i16(0, 1, 2, 3, 4, 5, 6, 7));
+	assert(simd_get_lane(x, 0) == 0);
+	pass;
+}
+
+test(i16_widen_hi) {
+	simd_i32 x = simd_widen_hi(simd_i16(0, 1, 2, 3, 4, 5, 6, 7));
+	assert(simd_get_lane(x, 0) == 4);
 	pass;
 }
 
