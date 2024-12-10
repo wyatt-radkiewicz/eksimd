@@ -612,7 +612,109 @@ _simdapi simd_f32 simd_f32_shr_lane(simd_f32 val, const int lanes) {
 #endif
 
 // Load
+#if __clang__
+_simdapi simd_i8 simd_i8_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 32);
+}
+_simdapi simd_u8 simd_u8_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 48);
+}
+_simdapi simd_i16 simd_i16_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 33);
+}
+_simdapi simd_u16 simd_u16_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 49);
+}
+_simdapi simd_i32 simd_i32_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 34);
+}
+_simdapi simd_u32 simd_u32_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 50);
+}
+_simdapi simd_f32 simd_f32_ld(const void *ptr) {
+	return __builtin_neon_vld1q_v(ptr, 41);
+}
+#else
+_simdapi simd_i8 simd_i8_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v16qi(ptr);
+}
+_simdapi simd_u8 simd_u8_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v16qi_us(ptr);
+}
+_simdapi simd_i16 simd_i16_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v8hi(ptr);
+}
+_simdapi simd_u16 simd_u16_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v8hi_us(ptr);
+}
+_simdapi simd_i32 simd_i32_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v4si(ptr);
+}
+_simdapi simd_u32 simd_u32_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v4si_us(ptr);
+}
+_simdapi simd_f32 simd_f32_ld(const void *ptr) {
+	return __builtin_aarch64_ld1v4sf(ptr);
+}
+#endif
+
 // Store
+#if __clang__
+_simdapi void simd_i8_st(void *to, simd_i8 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 32);
+}
+_simdapi void simd_u8_st(void *to, simd_u8 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 48);
+}
+_simdapi void simd_i16_st(void *to, simd_i16 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 33);
+}
+_simdapi void simd_u16_st(void *to, simd_u16 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 49);
+}
+_simdapi void simd_i32_st(void *to, simd_i32 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 34);
+}
+_simdapi void simd_u32_st(void *to, simd_u32 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 50);
+}
+_simdapi void simd_f32_st(void *to, simd_f32 val) {
+	__builtin_neon_vst1q_v(to, (simd_i8)val, 41);
+}
+#else
+_simdapi void simd_i8_st(void *to, simd_i8 val) {
+	__builtin_aarch64_st1v16qi(to, val);
+}
+_simdapi void simd_u8_st(void *to, simd_u8 val) {
+	__builtin_aarch64_st1v16qi_su(to, val);
+}
+_simdapi void simd_i16_st(void *to, simd_i16 val) {
+	__builtin_aarch64_st1v8hi(to, val);
+}
+_simdapi void simd_u16_st(void *to, simd_u16 val) {
+	__builtin_aarch64_st1v8hi_su(to, val);
+}
+_simdapi void simd_i32_st(void *to, simd_i32 val) {
+	__builtin_aarch64_st1v4si(to, val);
+}
+_simdapi void simd_u32_st(void *to, simd_u32 val) {
+	__builtin_aarch64_st1v4si_su(to, val);
+}
+_simdapi void simd_f32_st(void *to, simd_f32 val) {
+	__builtin_aarch64_st1v4sf(to, val);
+}
+#endif
+#define simd_st(_to, _simd)                                                    \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i8: simd_i8_st,                                          \
+		 simd_u8: simd_u8_st,                                          \
+		 simd_i16: simd_i16_st,                                        \
+		 simd_u16: simd_u16_st,                                        \
+		 simd_i32: simd_i32_st,                                        \
+		 simd_u32: simd_u32_st,                                        \
+		 simd_f32: simd_f32_st)(_to, _simd))
+
 // Widen
 // Narrow
 

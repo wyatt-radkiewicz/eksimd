@@ -421,3 +421,22 @@ test(shr_lane_u32) {
 	pass;
 }
 
+test(u32_ld) {
+	simd_u32 x = simd_u32_ld((uint32_t[4]){ 1, 3, 3, 7 });
+	assert(simd_get_lane(x, 0) == 1);
+	assert(simd_get_lane(x, 1) == 3);
+	assert(simd_get_lane(x, 2) == 3);
+	assert(simd_get_lane(x, 3) == 7);
+	pass;
+}
+
+test(u32_st) {
+	uint32_t arr[4];
+	simd_st(arr, simd_u32(0, 1, 2, 3));
+	assert(arr[0] == 0);
+	assert(arr[1] == 1);
+	assert(arr[2] == 2);
+	assert(arr[3] == 3);
+	pass;
+}
+
