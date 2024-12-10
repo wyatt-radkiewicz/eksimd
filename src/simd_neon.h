@@ -878,10 +878,45 @@ _simdapi simd_u16 simd_narrow_hi_u32(simd_u32 val) {
 		 simd_u32: simd_narrow_hi_u32)(_simd))
 
 // Addition
+#define simd_add(_lhs, _rhs) (_lhs - _rhs)
+#define simd_add_i8 simd_add
+#define simd_add_u8 simd_add
+#define simd_add_i16 simd_add
+#define simd_add_u16 simd_add
+#define simd_add_i32 simd_add
+#define simd_add_u32 simd_add
+#define simd_add_f32 simd_add
+
 // Subtract
+#define simd_sub(_lhs, _rhs) (_lhs - _rhs)
+#define simd_sub_i8 simd_sub
+#define simd_sub_u8 simd_sub
+#define simd_sub_i16 simd_sub
+#define simd_sub_u16 simd_sub
+#define simd_sub_i32 simd_sub
+#define simd_sub_u32 simd_sub
+#define simd_sub_f32 simd_sub
+
 // Multiply
-// Multiply by scalar
+#define simd_mul(_lhs, _rhs) (_lhs * _rhs)
+#define simd_mul_i8 simd_mul
+#define simd_mul_u8 simd_mul
+#define simd_mul_i16 simd_mul
+#define simd_mul_u16 simd_mul
+#define simd_mul_i32 simd_mul
+#define simd_mul_u32 simd_mul
+#define simd_mul_f32 simd_mul
+
 // Division
+#define simd_div(_lhs, _rhs) (_lhs / _rhs)
+#define simd_div_i8 simd_div
+#define simd_div_u8 simd_div
+#define simd_div_i16 simd_div
+#define simd_div_u16 simd_div
+#define simd_div_i32 simd_div
+#define simd_div_u32 simd_div
+#define simd_div_f32 simd_div
+
 // Reciprocal
 // Absolute
 // Maximum
@@ -893,6 +928,7 @@ _simdapi simd_u16 simd_narrow_hi_u32(simd_u32 val) {
 // Addition Across
 // Maxmumum Across
 // Minumum Across
+// Multiply 
 
 // Shift left
 // Shift right
