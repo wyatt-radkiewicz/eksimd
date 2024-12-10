@@ -447,27 +447,45 @@ test(u32_st) {
 	pass;
 }
 
-test(i8_widen_lo) {
+test(widen_lo_i8) {
 	simd_i16 x = simd_widen_lo(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(x, 0) == 0);
 	pass;
 }
 
-test(i8_widen_hi) {
+test(widen_hi_i8) {
 	simd_i16 x = simd_widen_hi(simd_i8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15));
 	assert(simd_get_lane(x, 0) == 8);
 	pass;
 }
 
-test(i16_widen_lo) {
+test(widen_lo_i16) {
 	simd_i32 x = simd_widen_lo(simd_i16(0, 1, 2, 3, 4, 5, 6, 7));
 	assert(simd_get_lane(x, 0) == 0);
 	pass;
 }
 
-test(i16_widen_hi) {
+test(widen_hi_i16) {
 	simd_i32 x = simd_widen_hi(simd_i16(0, 1, 2, 3, 4, 5, 6, 7));
 	assert(simd_get_lane(x, 0) == 4);
+	pass;
+}
+
+test(narrow_lo_i32) {
+	simd_i16 x = simd_narrow_lo(simd_i32(0, 1, 2, 3));
+	int16_t arr[8] = { 0, 1, 2, 3, 0, 0, 0, 0 };
+	int16_t out[8];
+	simd_st(out, x);
+	assert(memcmp(arr, out, sizeof(arr)) == 0);
+	pass;
+}
+
+test(narrow_hi_i32) {
+	simd_i16 x = simd_narrow_hi(simd_i32(0, 1, 2, 3));
+	int16_t arr[8] = { 0, 0, 0, 0, 0, 1, 2, 3 };
+	int16_t out[8];
+	simd_st(out, x);
+	assert(memcmp(arr, out, sizeof(arr)) == 0);
 	pass;
 }
 

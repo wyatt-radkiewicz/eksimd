@@ -711,20 +711,20 @@ _simdapi simd_u16 simd_widen_hi_u8(simd_u8 val) {
 	return (simd_i16)__builtin_neon_vshll_n_v(
 		_simd_shuffle(val, val, 8, 9, 10, 11, 12, 13, 14, 15), 0, 49);
 }
-_simdapi simd_i16 simd_widen_lo_i16(simd_i16 val) {
-	return (simd_i16)__builtin_neon_vmovl_v(
+_simdapi simd_i32 simd_widen_lo_i16(simd_i16 val) {
+	return (simd_i32)__builtin_neon_vmovl_v(
 		_simd_shuffle(val, val, 0, 1, 2, 3), 34);
 }
-_simdapi simd_i16 simd_widen_hi_i16(simd_i16 val) {
-	return (simd_i16)__builtin_neon_vshll_n_v(
+_simdapi simd_i32 simd_widen_hi_i16(simd_i16 val) {
+	return (simd_i32)__builtin_neon_vshll_n_v(
 		_simd_shuffle(val, val, 4, 5, 6, 7), 0, 34);
 }
-_simdapi simd_u16 simd_widen_lo_u16(simd_u16 val) {
-	return (simd_i16)__builtin_neon_vmovl_v(
+_simdapi simd_u32 simd_widen_lo_u16(simd_u16 val) {
+	return (simd_i32)__builtin_neon_vmovl_v(
 		_simd_shuffle(val, val, 0, 1, 2, 3), 50);
 }
-_simdapi simd_u16 simd_widen_hi_u16(simd_u16 val) {
-	return (simd_i16)__builtin_neon_vshll_n_v(
+_simdapi simd_u32 simd_widen_hi_u16(simd_u16 val) {
+	return (simd_i32)__builtin_neon_vshll_n_v(
 		_simd_shuffle(val, val, 4, 5, 6, 7), 0, 50);
 }
 #else
@@ -772,8 +772,110 @@ _simdapi simd_u32 simd_widen_hi_u16(simd_u16 val) {
 
 // Narrow
 #if __clang__
+_simdapi simd_i8 simd_narrow_lo_i16(simd_i16 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(8))) int8_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 0),
+		(__attribute__((neon_vector_type(8))) int8_t){0}, 0, 1, 2, 3, 4,
+		5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+}
+_simdapi simd_i8 simd_narrow_hi_i16(simd_i16 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(8))) int8_t){0},
+		(__attribute__((neon_vector_type(8))) int8_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 0),
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+}
+_simdapi simd_u8 simd_narrow_lo_u16(simd_u16 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(8))) uint8_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 16),
+		(__attribute__((neon_vector_type(8))) uint8_t){0}, 0, 1, 2, 3,
+		4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+}
+_simdapi simd_i8 simd_narrow_hi_u16(simd_u16 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(8))) uint8_t){0},
+		(__attribute__((neon_vector_type(8))) uint8_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 16),
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+}
+_simdapi simd_i16 simd_narrow_lo_i32(simd_i32 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(4))) int16_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 1),
+		(__attribute__((neon_vector_type(4))) int16_t){0}, 0, 1, 2, 3,
+		4, 5, 6, 7);
+}
+_simdapi simd_i16 simd_narrow_hi_i32(simd_i32 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(4))) int16_t){0},
+		(__attribute__((neon_vector_type(4))) int16_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 1),
+		0, 1, 2, 3, 4, 5, 6, 7);
+}
+_simdapi simd_u16 simd_narrow_lo_u32(simd_u32 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(4))) uint16_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 17),
+		(__attribute__((neon_vector_type(4))) uint16_t){0}, 0, 1, 2, 3,
+		4, 5, 6, 7);
+}
+_simdapi simd_i16 simd_narrow_hi_u32(simd_u32 val) {
+	return _simd_shuffle(
+		(__attribute__((neon_vector_type(4))) uint16_t){0},
+		(__attribute__((neon_vector_type(4))) uint16_t)
+			__builtin_neon_vmovn_v((simd_i8)val, 17),
+		0, 1, 2, 3, 4, 5, 6, 7);
+}
 #else
+_simdapi simd_i8 simd_narrow_lo_i16(simd_i16 val) {
+	return __builtin_aarch64_combinev8qi(
+		__builtin_aarch64_xtnv8hi(val), (__Int8x8_t){0});
+}
+_simdapi simd_i8 simd_narrow_hi_i16(simd_i16 val) {
+	return __builtin_aarch64_combinev8qi(
+		(__Int8x8_t){0}, __builtin_aarch64_xtnv8hi(val));
+}
+_simdapi simd_u8 simd_narrow_lo_u16(simd_u16 val) {
+	return __builtin_aarch64_combinev8qi_uuu(
+		__builtin_aarch64_xtnv8hi_uu(val), (__Uint8x8_t){0});
+}
+_simdapi simd_u8 simd_narrow_hi_u16(simd_u16 val) {
+	return __builtin_aarch64_combinev8qi_uuu(
+		(__Uint8x8_t){0}, __builtin_aarch64_xtnv8hi_uu(val));
+}
+_simdapi simd_i16 simd_narrow_lo_i32(simd_i32 val) {
+	return __builtin_aarch64_combinev4hi(
+		__builtin_aarch64_xtnv4si(val), (__Int16x4_t){0});
+}
+_simdapi simd_i16 simd_narrow_hi_i32(simd_i32 val) {
+	return __builtin_aarch64_combinev4hi(
+		(__Int16x4_t){0}, __builtin_aarch64_xtnv4si(val));
+}
+_simdapi simd_u16 simd_narrow_lo_u32(simd_u32 val) {
+	return __builtin_aarch64_combinev4hi_uuu(
+		__builtin_aarch64_xtnv4si_uu(val), (__Uint16x4_t){0});
+}
+_simdapi simd_u16 simd_narrow_hi_u32(simd_u32 val) {
+	return __builtin_aarch64_combinev4hi_uuu(
+		(__Uint16x4_t){0}, __builtin_aarch64_xtnv4si_uu(val));
+}
 #endif
+#define simd_narrow_lo(_simd)                                                  \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i16: simd_narrow_lo_i16,                                 \
+		 simd_u16: simd_narrow_lo_u16,                                 \
+		 simd_i32: simd_narrow_lo_i32,                                 \
+		 simd_u32: simd_narrow_lo_u32)(_simd))
+#define simd_narrow_hi(_simd)                                                  \
+	(_Generic(                                                             \
+		_simd,                                                         \
+		 simd_i16: simd_narrow_hi_i16,                                 \
+		 simd_u16: simd_narrow_hi_u16,                                 \
+		 simd_i32: simd_narrow_hi_i32,                                 \
+		 simd_u32: simd_narrow_hi_u32)(_simd))
 
 // Addition
 // Subtract
@@ -787,7 +889,7 @@ _simdapi simd_u32 simd_widen_hi_u16(simd_u16 val) {
 // Round
 // Square Root
 // Pairwise Addition
-// Pairwise Addition with Narrow
+// Pairwise Addition with Widen
 // Addition Across
 // Maxmumum Across
 // Minumum Across
